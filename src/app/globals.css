@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: clip;  /* clip lebih reliable dari hidden — tidak bikin scroll container */
+  }
+  body {
+    @apply bg-ivory text-ink font-body antialiased;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: #b89968;
+    color: #fbf8f3;
+  }
+}
+
+@layer utilities {
+  .container-narrow {
+    @apply mx-auto max-w-6xl px-6 md:px-10;
+  }
+  .eyebrow {
+    @apply text-xs uppercase tracking-widest2 text-stone;
+  }
+  .h-display {
+    @apply font-display font-light tracking-tight;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
