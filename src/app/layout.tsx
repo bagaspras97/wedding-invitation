@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
+// @ts-ignore
 import "./globals.css";
 
 const display = Cormorant_Garamond({
@@ -15,7 +16,7 @@ const body = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Bagas & Zulia — Undangan Pernikahan",
+  title: "Prasetyo & Yolla — Undangan Pernikahan",
   description:
     "Dengan penuh sukacita, kami mengundang Anda untuk hadir dalam hari bahagia kami.",
 };
