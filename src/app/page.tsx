@@ -1,5 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import InvitationIntro from "@/components/InvitationIntro";
 import Story from "@/components/Story";
 import SaveTheDate from "@/components/SaveTheDate";
 import EventDetails from "@/components/EventDetails";
@@ -13,6 +14,7 @@ export default function Page() {
       <Nav />
       <main>
         <Hero />
+        <InvitationIntro />
         <Story />
         <SaveTheDate />
         <EventDetails />
