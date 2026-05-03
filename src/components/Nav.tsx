@@ -1,7 +1,7 @@
 "use client";
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { couple, navLinks } from "@/lib/content";
+import { couple, mobileMenuLinks, navLinks } from "@/lib/content";
 import { Menu, X } from "lucide-react";
 
 export default function Nav() {
@@ -39,10 +39,10 @@ export default function Nav() {
           marginTop: 14,
           backgroundColor: "rgba(251,248,243,0.95)",
           borderRadius: 999,
-          paddingLeft: 28,
+          paddingLeft: isMobile ? 22 : 28,
           paddingRight: 10,
-          paddingTop: 10,
-          paddingBottom: 10,
+          paddingTop: isMobile ? 8 : 10,
+          paddingBottom: isMobile ? 8 : 10,
           boxShadow: "0 6px 28px -6px rgba(0,0,0,0.12)",
         } : {
           width: "100%",
@@ -64,7 +64,7 @@ export default function Nav() {
           href="#top"
           animate={{ color: isPill ? "#2b2620" : "#fbf8f3" }}
           transition={{ duration: 0.4 }}
-          className="font-display text-xl tracking-wide"
+          className="font-display text-xl tracking-wide md:text-xl"
         >
           {couple.initials}
         </motion.a>
@@ -93,7 +93,7 @@ export default function Nav() {
             : { backgroundColor: "#fbf8f3", color: "#2b2620" }
           }
           transition={{ duration: 0.4 }}
-          className="hidden rounded-full px-5 py-2.5 text-xs uppercase tracking-widest2 md:inline-block"
+          className="rounded-full px-5 py-2.5 text-xs font-medium md:inline-block md:uppercase md:tracking-widest2"
         >
           Submit RSVP
         </motion.a>
@@ -114,22 +114,16 @@ export default function Nav() {
         <motion.ul
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="pointer-events-auto absolute left-4 right-4 top-20 flex flex-col gap-2 rounded-2xl bg-ivory p-6 shadow-xl md:hidden"
+          className="pointer-events-auto absolute right-6 top-[4.6rem] flex w-44 flex-col items-end gap-1 rounded-2xl bg-ivory/95 p-5 text-right shadow-xl backdrop-blur md:hidden"
         >
-          {navLinks.map((l) => (
+          {mobileMenuLinks.map((l) => (
             <li key={l.href}>
               <a href={l.href} onClick={() => setOpen(false)}
-                className="block py-2 text-sm uppercase tracking-widest2 text-ink">
+                className="block py-2 text-sm text-ink transition hover:text-accent">
                 {l.label}
               </a>
             </li>
           ))}
-          <li className="pt-2">
-            <a href="#rsvp" onClick={() => setOpen(false)}
-              className="block rounded-full bg-ink px-5 py-3 text-center text-xs uppercase tracking-widest2 text-ivory">
-              Submit RSVP
-            </a>
-          </li>
         </motion.ul>
       )}
     </div>

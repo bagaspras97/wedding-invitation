@@ -79,9 +79,7 @@ function MobileHero() {
             {fmt(weddingDate)}
           </p>
           <h1 className="font-display text-[14vw] font-light italic leading-none text-ivory">
-            {couple.groom.name}{" "}
-            <span className="not-italic">&</span>{" "}
-            {couple.bride.name}
+            {couple.heroNames}
           </h1>
         </motion.div>
 
@@ -164,9 +162,7 @@ function DesktopHero() {
               {fmt(weddingDate)}
             </p>
             <h1 className="font-display text-right text-[10vw] font-light italic leading-none md:text-[8vw]">
-              {couple.groom.name}{" "}
-              <span className="not-italic text-[0.85em]">&</span>{" "}
-              {couple.bride.name}
+              {couple.heroNames}
             </h1>
           </motion.div>
         </motion.div>
