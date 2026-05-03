@@ -9,18 +9,18 @@ export default function InvitationIntro() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 70%", "end 38%"],
+    offset: ["start 72%", "end 42%"],
   });
   const words = introText.split(" ");
 
   return (
-    <section ref={ref} className="bg-ivory px-6 py-28 md:py-36">
+    <section ref={ref} className="bg-ivory px-6 py-28 md:py-44">
       <motion.h2
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="mx-auto max-w-[92vw] text-center font-display text-[clamp(2.35rem,7vw,5.3rem)] font-semibold leading-[0.92] tracking-[-0.02em] md:max-w-none md:whitespace-nowrap md:text-[clamp(2.7rem,4.65vw,5.8rem)]"
+        className="mx-auto max-w-[94vw] text-center font-display text-[clamp(2.55rem,8vw,5.4rem)] font-semibold leading-[0.98] tracking-[-0.035em] md:max-w-none md:whitespace-nowrap md:text-[clamp(2.75rem,4.35vw,5.45rem)] md:leading-[0.9] md:tracking-[-0.045em]"
       >
         {words.map((word, wordIndex) => {
           const previousLength = words
@@ -39,7 +39,7 @@ export default function InvitationIntro() {
                 />
               ))}
               {wordIndex < words.length - 1 && (
-                <span className="inline-block w-[0.12em]" aria-hidden="true" />
+                <span className="inline-block w-[0.16em] md:w-[0.13em]" aria-hidden="true" />
               )}
             </span>
           );
@@ -61,7 +61,7 @@ function IntroChar({
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
 }) {
   const start = index / total;
-  const end = Math.min(1, start + 0.18);
+  const end = Math.min(1, start + 0.16);
   const color = useTransform(progress, [start, end], ["#a8a39b", "#2b2620"]);
 
   return (

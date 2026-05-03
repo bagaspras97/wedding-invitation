@@ -24,19 +24,19 @@ const storyMoments: StoryMoment[] = story.flatMap((chapter, chapterIndex) =>
   }))
 );
 
-function chapterStart(index: number, total: number) {
-  const step = 1 / total;
-  return index === 0 ? 0 : Math.max(0, (index - 0.72) * step);
+function momentAnchor(index: number, total: number) {
+  return total <= 1 ? 0 : index / (total - 1);
 }
 
-function chapterTiming(index: number, total: number) {
-  const step = 1 / total;
-  const start = chapterStart(index, total);
-  const nextStart = index === total - 1 ? 1 : chapterStart(index + 1, total);
-  const intro = Math.min(1, start + step * 0.12);
-  const outro = Math.max(intro, nextStart + step * 0.08);
-  const end = index === total - 1 ? 1 : Math.min(1, nextStart + step * 0.22);
-  return { start, intro, outro, end };
+function momentTiming(index: number, total: number) {
+  const span = total <= 1 ? 1 : 1 / (total - 1);
+  const anchor = momentAnchor(index, total);
+  const enter = Math.max(0, anchor - span * 0.38);
+  const arrive = Math.max(0, anchor - span * 0.08);
+  const active = anchor;
+  const hold = Math.min(1, anchor + span * 0.34);
+  const exit = index === total - 1 ? 1 : Math.min(1, anchor + span * 0.58);
+  return { span, anchor, enter, arrive, active, hold, exit };
 }
 
 export default function Story() {
@@ -46,16 +46,16 @@ export default function Story() {
     offset: ["start start", "end end"],
   });
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 260,
-    damping: 38,
-    mass: 0.18,
+    stiffness: 210,
+    damping: 34,
+    mass: 0.2,
   });
 
   return (
     <section
       id="cerita"
       ref={ref}
-      className="relative bg-ivory md:h-[430vh]"
+      className="relative bg-ivory md:h-[360vh]"
     >
       <div className="sticky top-0 hidden h-screen overflow-hidden md:block">
         <div className="container-narrow relative h-full">
@@ -92,7 +92,7 @@ export default function Story() {
         </div>
       </div>
 
-      <div className="h-[560vh] md:hidden">
+      <div className="h-[420vh] md:hidden">
         <MobileStory progress={smoothProgress} />
       </div>
     </section>
@@ -109,14 +109,13 @@ function ChapterCopy({
   progress: MotionValue<number>;
 }) {
   const total = storyMoments.length;
-  const step = 1 / total;
-  const { start, intro, outro, end } = chapterTiming(index, total);
+  const { enter, arrive, hold, exit } = momentTiming(index, total);
   const isLast = index === total - 1;
   const opacity = useTransform(
     progress,
     isLast
-      ? [Math.max(0, start - 0.01), intro, 1]
-      : [Math.max(0, start - 0.01), intro, outro, end],
+      ? [enter, arrive, 1]
+      : [enter, arrive, hold, exit],
     isLast
       ? [0, 1, 1]
       : [index === 0 ? 1 : 0, 1, 1, 0]
@@ -124,8 +123,8 @@ function ChapterCopy({
   const x = useTransform(
     progress,
     isLast
-      ? [Math.max(0, start - 0.01), intro, 1]
-      : [Math.max(0, start - 0.01), intro, outro, end],
+      ? [enter, arrive, 1]
+      : [enter, arrive, hold, exit],
     isLast
       ? [index % 2 ? 24 : -24, 0, 0]
       : [index % 2 ? 24 : -24, 0, 0, index % 2 ? -24 : 24]
@@ -140,10 +139,10 @@ function ChapterCopy({
           : "left-[calc(50%+210px)] text-left"
       }`}
     >
-      <p className="text-xl font-bold leading-tight text-ink xl:text-2xl">
+      <p className="text-xl font-semibold leading-tight tracking-[-0.02em] text-ink xl:text-2xl">
         {item.chapterLabel}
       </p>
-      <p className="mt-4 text-balance text-base leading-relaxed text-stone xl:text-lg">
+      <p className="mt-4 text-balance text-base leading-[1.72] text-stone xl:text-lg">
         {item.body}
       </p>
     </motion.article>
@@ -160,51 +159,44 @@ function StoryPhoto({
   progress: MotionValue<number>;
 }) {
   const total = storyMoments.length;
-  const step = 1 / total;
-  const startFor = (i: number) => chapterStart(i, total);
-  const start = startFor(index);
-  const previousStart = startFor(index - 1);
-  const preEnter = Math.max(0, start - step * 0.1);
-  const approach = Math.min(1, start + step * 0.2);
-  const arrive = Math.min(1, start + step * 0.34);
+  const previousAnchor = momentAnchor(index - 1, total);
+  const { enter, arrive, active, hold, exit } = momentTiming(index, total);
   const isLast = index === total - 1;
-  const hold = isLast ? 0.9 : Math.min(1, start + step * 0.6);
-  const leave = isLast ? 1 : Math.min(1, start + step * 0.78);
-  const stackedY = index * 14;
-  const waitingY = index === 0 ? stackedY : 300 + (index - 1) * 36;
+  const stackedY = index * 13;
+  const waitingY = index === 0 ? stackedY : 255 + (index - 1) * 26;
   const y = useTransform(
     progress,
     index === 0
-      ? [0, hold, leave]
-      : [preEnter, start, approach, arrive, hold, leave],
+      ? [0, hold, exit]
+      : [enter, arrive, active, hold, exit],
     index === 0
-      ? [stackedY, stackedY, stackedY + 10]
-      : [waitingY, 172, 34, stackedY, stackedY, stackedY + 10]
+      ? [stackedY, stackedY, stackedY + 8]
+      : [waitingY, 72, stackedY, stackedY, stackedY + 8]
   );
   const rotate = useTransform(
     progress,
     index === 0
-      ? [0, arrive, leave]
-      : [preEnter, start, approach, arrive, leave],
+      ? [0, active, exit]
+      : [enter, arrive, active, exit],
     index === 0
-      ? [1.2, 1.2, 1.7]
-      : [index % 2 ? 3 : -3, index % 2 ? 1.2 : -1.2, index % 2 ? -0.4 : 0.4, index % 2 ? -1.2 : 1.2, index % 2 ? -1.7 : 1.7]
+      ? [1.2, 1.2, 1.6]
+      : [index % 2 ? 2.2 : -2.2, index % 2 ? 0.4 : -0.4, index % 2 ? -1.1 : 1.1, index % 2 ? -1.5 : 1.5]
   );
   const scale = useTransform(
     progress,
     index === 0
-      ? [0, arrive, leave]
-      : [preEnter, start, approach, arrive, leave],
+      ? [0, active, exit]
+      : [enter, arrive, active, exit],
     index === 0
       ? [1, 1, 0.985]
-      : [0.95, 0.985, 1, 1, 0.985]
+      : [0.965, 0.99, 1, 0.985]
   );
   const opacityInput =
     index === 0
       ? [0, 1]
       : index === 1
-        ? [0, preEnter, start, 1]
-        : [0, previousStart, preEnter, start, 1];
+        ? [0, enter, arrive, 1]
+        : [0, previousAnchor, enter, arrive, 1];
   const opacityOutput =
     index === 0
       ? [1, 1]
@@ -215,19 +207,19 @@ function StoryPhoto({
 
   return (
     <div
-      className="absolute left-1/2 top-[57vh] w-[min(24vw,400px)] -translate-x-1/2 -translate-y-1/2"
+      className="absolute left-1/2 top-[57vh] w-[min(23vw,390px)] -translate-x-1/2 -translate-y-1/2"
       style={{ zIndex: 20 + index }}
     >
       <motion.figure
         style={{ y, rotate, scale, opacity }}
-        className="rounded-[10px] border border-ink/10 bg-[#f8f4eb] p-3 pb-5 shadow-[0_22px_54px_-30px_rgba(43,38,32,0.5)]"
+        className="rounded-[10px] border border-ink/10 bg-[#f8f4eb] p-3 pb-5 shadow-[0_24px_62px_-34px_rgba(43,38,32,0.48)]"
       >
         <img
           src={item.image}
           alt={item.caption}
           className="aspect-[16/10] w-full rounded-[4px] object-cover"
         />
-        <figcaption className="mt-4 text-center text-sm text-stone xl:text-base">
+        <figcaption className="mt-4 text-center text-sm leading-tight text-stone xl:text-base">
           {item.caption}
         </figcaption>
       </motion.figure>
@@ -238,12 +230,12 @@ function StoryPhoto({
 function MobileStory({ progress }: { progress: MotionValue<number> }) {
   return (
     <div className="sticky top-0 h-screen overflow-hidden md:hidden">
-      <div className="relative h-full px-6 pt-[10vh]">
-        <h2 className="h-display text-center text-[19vw] leading-none text-ink">
+      <div className="relative h-full px-6 pt-[9vh]">
+        <h2 className="h-display text-center text-[18vw] leading-none tracking-[-0.04em] text-ink">
           our story
         </h2>
 
-        <div className="relative mx-auto mt-8 h-[32vh] max-w-[680px]">
+        <div className="relative mx-auto mt-7 h-[30vh] max-w-[680px]">
           {storyMoments.map((item, index) => (
             <MobileChapterCopy
               key={`${item.chapter}-${item.momentIndex}`}
@@ -254,7 +246,7 @@ function MobileStory({ progress }: { progress: MotionValue<number> }) {
           ))}
         </div>
 
-        <div className="absolute inset-x-0 top-[48vh] h-[38vh]">
+        <div className="absolute inset-x-0 top-[47vh] h-[38vh]">
           {storyMoments.map((item, index) => (
             <MobileStoryPhoto
               key={`${item.chapter}-${item.momentIndex}`}
@@ -279,14 +271,13 @@ function MobileChapterCopy({
   progress: MotionValue<number>;
 }) {
   const total = storyMoments.length;
-  const step = 1 / total;
-  const { start, intro, outro, end } = chapterTiming(index, total);
+  const { span, enter, arrive, hold, exit } = momentTiming(index, total);
   const isLast = index === total - 1;
   const opacity = useTransform(
     progress,
     isLast
-      ? [Math.max(0, start - step * 0.08), intro, 1]
-      : [Math.max(0, start - step * 0.08), intro, outro, end],
+      ? [Math.max(0, enter - span * 0.04), arrive, 1]
+      : [Math.max(0, enter - span * 0.04), arrive, hold, exit],
     isLast
       ? [0, 1, 1]
       : [index === 0 ? 1 : 0, 1, 1, 0]
@@ -294,8 +285,8 @@ function MobileChapterCopy({
   const y = useTransform(
     progress,
     isLast
-      ? [Math.max(0, start - step * 0.08), intro, 1]
-      : [Math.max(0, start - step * 0.08), intro, end],
+      ? [Math.max(0, enter - span * 0.04), arrive, 1]
+      : [Math.max(0, enter - span * 0.04), arrive, exit],
     isLast
       ? [16, 0, 0]
       : [16, 0, -18]
@@ -306,10 +297,10 @@ function MobileChapterCopy({
       style={{ opacity, y }}
       className="absolute inset-0 text-center"
     >
-      <p className="text-[clamp(1.5rem,5.4vw,2.1rem)] font-bold leading-tight text-ink">
+      <p className="text-[clamp(1.42rem,5vw,2rem)] font-semibold leading-tight tracking-[-0.025em] text-ink">
         {item.chapterLabel}
       </p>
-      <p className="mx-auto mt-4 max-w-[620px] text-[clamp(1rem,4.15vw,1.55rem)] leading-[1.38] text-stone">
+      <p className="mx-auto mt-4 max-w-[620px] text-[clamp(0.98rem,3.85vw,1.45rem)] leading-[1.46] text-stone">
         {item.body}
       </p>
     </motion.article>
@@ -326,51 +317,44 @@ function MobileStoryPhoto({
   progress: MotionValue<number>;
 }) {
   const total = storyMoments.length;
-  const step = 1 / total;
-  const startFor = (i: number) => chapterStart(i, total);
-  const start = startFor(index);
-  const previousStart = startFor(index - 1);
-  const preEnter = Math.max(0, start - step * 0.1);
-  const approach = Math.min(1, start + step * 0.2);
-  const arrive = Math.min(1, start + step * 0.34);
-  const hold = Math.min(1, start + step * 0.6);
-  const leave = Math.min(1, start + step * 0.78);
-  const stackedY = index * 12;
-  const waitingY = index === 0 ? stackedY : 238;
+  const previousAnchor = momentAnchor(index - 1, total);
+  const { enter, arrive, active, hold, exit } = momentTiming(index, total);
+  const stackedY = index * 10;
+  const waitingY = index === 0 ? stackedY : 210;
 
   const y = useTransform(
     progress,
     index === 0
-      ? [0, hold, leave]
-      : [preEnter, start, approach, arrive, hold, leave],
+      ? [0, hold, exit]
+      : [enter, arrive, active, hold, exit],
     index === 0
-      ? [stackedY, stackedY, stackedY + 8]
-      : [waitingY, 148, 32, stackedY, stackedY, stackedY + 8]
+      ? [stackedY, stackedY, stackedY + 6]
+      : [waitingY, 56, stackedY, stackedY, stackedY + 6]
   );
   const rotate = useTransform(
     progress,
     index === 0
-      ? [0, arrive, leave]
-      : [preEnter, start, approach, arrive, leave],
+      ? [0, active, exit]
+      : [enter, arrive, active, exit],
     index === 0
-      ? [-1.4, -1.4, -1.8]
-      : [index % 2 ? 2.2 : -2.2, index % 2 ? 1 : -1, index % 2 ? -0.4 : 0.4, index % 2 ? -1.2 : 1.2, index % 2 ? -1.7 : 1.7]
+      ? [-1.2, -1.2, -1.6]
+      : [index % 2 ? 1.8 : -1.8, index % 2 ? 0.35 : -0.35, index % 2 ? -1 : 1, index % 2 ? -1.4 : 1.4]
   );
   const scale = useTransform(
     progress,
     index === 0
-      ? [0, arrive, leave]
-      : [preEnter, start, approach, arrive, leave],
+      ? [0, active, exit]
+      : [enter, arrive, active, exit],
     index === 0
       ? [1, 1, 0.985]
-      : [0.96, 0.985, 1, 1, 0.985]
+      : [0.965, 0.99, 1, 0.985]
   );
   const opacityInput =
     index === 0
       ? [0, 1]
       : index === 1
-        ? [0, preEnter, start, 1]
-        : [0, previousStart, preEnter, start, 1];
+        ? [0, enter, arrive, 1]
+        : [0, previousAnchor, enter, arrive, 1];
   const opacityOutput =
     index === 0
       ? [1, 1]
@@ -381,19 +365,19 @@ function MobileStoryPhoto({
 
   return (
     <div
-      className="absolute left-1/2 top-0 w-[62vw] max-w-[460px] -translate-x-1/2"
+      className="absolute left-1/2 top-0 w-[64vw] max-w-[460px] -translate-x-1/2"
       style={{ zIndex: 20 + index }}
     >
       <motion.figure
         style={{ y, rotate, scale, opacity }}
-        className="rounded-[10px] border border-ink/10 bg-[#f8f4eb] p-3 pb-6 shadow-[0_22px_56px_-30px_rgba(43,38,32,0.52)]"
+        className="rounded-[10px] border border-ink/10 bg-[#f8f4eb] p-3 pb-5 shadow-[0_22px_56px_-32px_rgba(43,38,32,0.5)]"
       >
         <img
           src={item.image}
           alt={item.caption}
           className="aspect-[16/10] w-full rounded-[4px] object-cover"
         />
-        <figcaption className="mt-4 text-center text-[clamp(0.95rem,3.5vw,1.35rem)] text-stone">
+        <figcaption className="mt-4 text-center text-[clamp(0.9rem,3.35vw,1.25rem)] leading-tight text-stone">
           {item.caption}
         </figcaption>
       </motion.figure>

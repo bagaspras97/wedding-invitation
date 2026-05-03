@@ -16,17 +16,19 @@ export const events = [
     title: "Akad Nikah",
     date: weddingDate,
     time: "10:00 WIB",
-    venue: "Masjid Al-Hikmah",
-    address: "Jl. Kenanga No. 12, Jakarta Selatan",
-    mapUrl: "https://maps.google.com/?q=-6.2615,106.8106",
+    venue: "Villa Edwin, Sirnagalih Bogor",
+    address:
+      "Jl. Kabandungan II, Sirnagalih, Kec. Tamansari, Kabupaten Bogor, Jawa Barat 16610",
+    mapUrl: "https://maps.app.goo.gl/srJPKoTqEbASQnCn7",
   },
   {
     title: "Resepsi",
     date: weddingDate,
     time: "18:00 WIB",
-    venue: "The Hermitage Ballroom",
-    address: "Jl. Cilacap No. 1, Menteng, Jakarta Pusat",
-    mapUrl: "https://maps.google.com/?q=-6.1944,106.8294",
+    venue: "Villa Edwin, Sirnagalih Bogor",
+    address:
+      "Jl. Kabandungan II, Sirnagalih, Kec. Tamansari, Kabupaten Bogor, Jawa Barat 16610",
+    mapUrl: "https://maps.app.goo.gl/srJPKoTqEbASQnCn7",
   },
 ];
 
@@ -170,7 +172,7 @@ export const heroCollage = [
 ];
 
 export const venueImage =
-  "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1800&q=80";
+  "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2200&q=85";
 
 export const gallery = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80",
@@ -188,6 +190,33 @@ export const closingQuote = {
     "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan-pasangan dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya.",
   source: "QS. Ar-Rum: 21",
 };
+
+export const wishes = [
+  {
+    name: "Nadia & Raka",
+    relation: "Sahabat",
+    message:
+      "Semoga setiap langkah kalian selalu dipenuhi kasih, sabar, dan tawa yang membuat rumah terasa hangat.",
+  },
+  {
+    name: "Keluarga Besar Putri",
+    relation: "Keluarga",
+    message:
+      "Selamat menempuh hidup baru. Semoga Allah menjaga cinta kalian dan menjadikannya sumber kebaikan.",
+  },
+  {
+    name: "Dimas",
+    relation: "Teman Kerja",
+    message:
+      "Bahagia selalu untuk Yolla dan Pras. Semoga perjalanan baru ini membawa banyak cerita indah.",
+  },
+  {
+    name: "Maya",
+    relation: "Teman Kuliah",
+    message:
+      "Doa terbaik untuk kalian berdua. Semoga rumah tangga kalian tumbuh dengan kelembutan dan keberkahan.",
+  },
+];
 
 export const navLinks = [
   { href: "#acara", label: "Google Maps" },

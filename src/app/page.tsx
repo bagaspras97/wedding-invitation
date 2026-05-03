@@ -3,8 +3,8 @@ import Hero from "@/components/Hero";
 import InvitationIntro from "@/components/InvitationIntro";
 import Story from "@/components/Story";
 import SaveTheDate from "@/components/SaveTheDate";
-import EventDetails from "@/components/EventDetails";
 import Gallery from "@/components/Gallery";
+import Wishes from "@/components/Wishes";
 import Rsvp from "@/components/Rsvp";
 import Footer from "@/components/Footer";
 
@@ -17,8 +17,8 @@ export default function Page() {
         <InvitationIntro />
         <Story />
         <SaveTheDate />
-        <EventDetails />
         <Gallery />
+        <Wishes />
         <Rsvp />
       </main>
       <Footer />

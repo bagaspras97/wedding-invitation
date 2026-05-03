@@ -41,13 +41,14 @@ export default function Nav() {
             ? {
                 width: "min(920px, 92vw)",
                 marginTop: 14,
-                backgroundColor: "rgba(251,248,243,0.96)",
+                backgroundColor: "rgba(255,253,248,0.98)",
                 borderRadius: 999,
                 paddingLeft: isMobile ? 22 : 28,
                 paddingRight: isMobile ? 14 : 10,
                 paddingTop: isMobile ? 8 : 10,
                 paddingBottom: isMobile ? 8 : 10,
-                boxShadow: "0 18px 70px -42px rgba(43,38,32,0.5)",
+                boxShadow:
+                  "0 18px 64px -34px rgba(43,38,32,0.28), 0 1px 0 rgba(255,255,255,0.9) inset",
               }
             : {
                 width: "100%",
@@ -62,7 +63,7 @@ export default function Nav() {
               }
         }
         transition={{ duration: 0.72, ease: springEase }}
-        className="pointer-events-auto flex items-center justify-between ring-1 ring-black/[0.03]"
+        className="pointer-events-auto flex items-center justify-between ring-1 ring-[#2b2620]/[0.08]"
         style={{ backdropFilter: isPill ? "blur(16px)" : "none" }}
       >
         <motion.a
