@@ -1,7 +1,8 @@
 "use client";
+
 import { AnimatePresence, motion } from "framer-motion";
-import { useState, type FormEvent } from "react";
 import { Check } from "lucide-react";
+import { useState, type FormEvent, type ReactNode } from "react";
 
 type FormState = {
   name: string;
@@ -17,112 +18,122 @@ export default function Rsvp() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [submitted, setSubmitted] = useState(false);
 
-  const update = <K extends keyof FormState>(k: K, v: FormState[K]) => {
-    setForm((f) => ({ ...f, [k]: v }));
-    setErrors((e) => ({ ...e, [k]: undefined }));
+  const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
+    setForm((current) => ({ ...current, [key]: value }));
+    setErrors((current) => ({ ...current, [key]: undefined }));
   };
 
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    const next: typeof errors = {};
-    if (!form.name.trim()) next.name = "Nama wajib diisi";
-    if (!form.attendance) next.attendance = "Pilih kehadiran";
-    setErrors(next);
-    if (Object.keys(next).length === 0) {
-      setSubmitted(true);
-      setForm(empty);
-      setTimeout(() => setSubmitted(false), 4500);
-    }
+  const onSubmit = (event: FormEvent) => {
+    event.preventDefault();
+
+    const nextErrors: typeof errors = {};
+    if (!form.name.trim()) nextErrors.name = "Nama wajib diisi";
+    if (!form.attendance) nextErrors.attendance = "Pilih kehadiran";
+
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    setSubmitted(true);
+    setForm(empty);
+    setTimeout(() => setSubmitted(false), 4500);
   };
 
   return (
-    <section id="rsvp" className="bg-cream py-28 md:py-36">
-      <div className="container-narrow">
+    <section id="rsvp" className="overflow-hidden bg-cream px-6 py-24 md:py-32">
+      <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="mx-auto max-w-2xl text-center"
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto max-w-3xl text-center"
         >
           <p className="eyebrow">Konfirmasi Kehadiran</p>
-          <h2 className="h-display mt-4 text-4xl md:text-5xl">RSVP</h2>
-          <p className="mt-6 text-stone">
-            Kehadiran Anda adalah hadiah terindah bagi kami. Mohon konfirmasi sebelum hari H.
+          <h2 className="mt-5 font-display text-[clamp(4.5rem,10vw,8.5rem)] font-light leading-[0.86] tracking-[-0.06em] text-ink">
+            rsvp
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-stone md:text-base">
+            Mohon konfirmasi kehadiran agar kami dapat menyiapkan tempat dengan baik.
           </p>
         </motion.div>
 
-        <motion.form
-          onSubmit={onSubmit}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="mx-auto mt-14 max-w-xl space-y-6"
-        >
-          <Field label="Nama Lengkap" error={errors.name}>
-            <input
-              type="text"
-              value={form.name}
-              onChange={(e) => update("name", e.target.value)}
-              className="input"
-              placeholder="Masukkan nama Anda"
-            />
-          </Field>
+        <div className="mx-auto mt-12 max-w-3xl md:mt-16">
+          <motion.form
+            onSubmit={onSubmit}
+            initial={{ opacity: 0, y: 42 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="rounded-[1.75rem] border border-ink/10 bg-ivory/70 p-5 shadow-[0_24px_80px_-62px_rgba(43,38,32,0.5)] backdrop-blur md:p-8"
+          >
+            <div className="grid gap-5 md:grid-cols-2">
+              <Field label="Nama Lengkap" error={errors.name}>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(event) => update("name", event.target.value)}
+                  className="input"
+                  placeholder="Nama Anda"
+                />
+              </Field>
 
-          <Field label="Jumlah Tamu">
-            <select
-              value={form.guests}
-              onChange={(e) => update("guests", e.target.value)}
-              className="input"
-            >
-              {[1, 2, 3, 4].map((n) => (
-                <option key={n} value={n}>
-                  {n} orang
-                </option>
-              ))}
-            </select>
-          </Field>
-
-          <Field label="Kehadiran" error={errors.attendance}>
-            <div className="grid grid-cols-2 gap-3">
-              {(["hadir", "tidak"] as const).map((v) => (
-                <button
-                  key={v}
-                  type="button"
-                  onClick={() => update("attendance", v)}
-                  className={`border px-4 py-3 text-sm uppercase tracking-widest2 transition ${
-                    form.attendance === v
-                      ? "border-accent bg-accent/10 text-ink"
-                      : "border-ink/20 text-stone hover:border-accent"
-                  }`}
+              <Field label="Jumlah Tamu">
+                <select
+                  value={form.guests}
+                  onChange={(event) => update("guests", event.target.value)}
+                  className="input"
                 >
-                  {v === "hadir" ? "Akan Hadir" : "Berhalangan"}
-                </button>
-              ))}
+                  {[1, 2, 3, 4].map((guests) => (
+                    <option key={guests} value={guests}>
+                      {guests} orang
+                    </option>
+                  ))}
+                </select>
+              </Field>
             </div>
-          </Field>
 
-          <Field label="Ucapan & Doa">
-            <textarea
-              value={form.message}
-              onChange={(e) => update("message", e.target.value)}
-              rows={4}
-              className="input resize-none"
-              placeholder="Tuliskan ucapan dan doa Anda untuk kami"
-            />
-          </Field>
+            <Field label="Kehadiran" error={errors.attendance} className="mt-6">
+              <div className="grid grid-cols-2 gap-3">
+                {(["hadir", "tidak"] as const).map((attendance) => (
+                  <button
+                    key={attendance}
+                    type="button"
+                    onClick={() => update("attendance", attendance)}
+                    className={`min-h-12 rounded-full border px-4 py-3 text-[11px] font-medium uppercase tracking-[0.22em] transition duration-300 active:scale-[0.98] ${
+                      form.attendance === attendance
+                        ? "border-ink bg-ink text-ivory shadow-[0_16px_38px_-28px_rgba(43,38,32,0.75)]"
+                        : "border-ink/14 bg-cream/55 text-stone hover:border-accent hover:text-ink"
+                    }`}
+                  >
+                    {attendance === "hadir" ? "Akan Hadir" : "Berhalangan"}
+                  </button>
+                ))}
+              </div>
+            </Field>
 
-          <div className="pt-4 text-center">
-            <button
-              type="submit"
-              className="rounded-full bg-ink px-10 py-3 text-xs uppercase tracking-widest2 text-ivory transition hover:bg-accent"
-            >
-              Kirim Konfirmasi
-            </button>
-          </div>
-        </motion.form>
+            <Field label="Ucapan & Doa" className="mt-6">
+              <textarea
+                value={form.message}
+                onChange={(event) => update("message", event.target.value)}
+                rows={5}
+                className="input resize-none"
+                placeholder="Tuliskan ucapan singkat untuk kami"
+              />
+            </Field>
+
+            <div className="mt-8 flex justify-center md:justify-end">
+              <button
+                type="submit"
+                className="rounded-full bg-ink px-8 py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-ivory shadow-[0_18px_48px_-32px_rgba(43,38,32,0.75)] transition duration-500 hover:scale-[1.01] hover:bg-accent active:scale-[0.99]"
+              >
+                Kirim Konfirmasi
+              </button>
+            </div>
+          </motion.form>
+        </div>
       </div>
+
+      <div className="pointer-events-none mx-auto mt-16 h-px max-w-5xl bg-gradient-to-r from-transparent via-ink/10 to-transparent md:mt-24" />
 
       <AnimatePresence>
         {submitted && (
@@ -130,10 +141,11 @@ export default function Rsvp() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full bg-ink px-6 py-3 text-sm text-ivory shadow-lg"
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed bottom-8 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center gap-3 rounded-full bg-ink px-5 py-3 text-sm text-ivory shadow-[0_24px_80px_-40px_rgba(43,38,32,0.9)] md:w-auto md:px-6"
           >
-            <Check size={16} className="text-accent" />
-            Terima kasih! Konfirmasi Anda telah kami terima.
+            <Check size={16} className="shrink-0 text-accent" />
+            Konfirmasi Anda telah kami terima.
           </motion.div>
         )}
       </AnimatePresence>
@@ -141,17 +153,27 @@ export default function Rsvp() {
       <style jsx>{`
         :global(.input) {
           width: 100%;
-          background: #fbf8f3;
-          border: 1px solid rgba(43, 38, 32, 0.15);
-          padding: 0.875rem 1rem;
+          min-height: 3.25rem;
+          border: 0;
+          border-bottom: 1px solid rgba(43, 38, 32, 0.16);
+          border-radius: 0;
+          background: transparent;
+          padding: 0.75rem 0;
           color: #2b2620;
           font-family: var(--font-body);
-          font-size: 0.95rem;
-          transition: border-color 0.2s;
+          font-size: 1rem;
+          line-height: 1.5;
+          transition: border-color 0.28s ease, color 0.28s ease;
           outline: none;
         }
         :global(.input:focus) {
-          border-color: #b89968;
+          border-color: #2b2620;
+        }
+        :global(.input::placeholder) {
+          color: rgba(138, 126, 110, 0.52);
+        }
+        :global(select.input) {
+          cursor: pointer;
         }
       `}</style>
     </section>
@@ -162,16 +184,20 @@ function Field({
   label,
   error,
   children,
+  className = "",
 }: {
   label: string;
   error?: string;
-  children: React.ReactNode;
+  children: ReactNode;
+  className?: string;
 }) {
   return (
-    <label className="block">
-      <span className="eyebrow mb-2 block">{label}</span>
+    <label className={`block ${className}`}>
+      <span className="mb-2 block text-[10px] uppercase tracking-[0.28em] text-stone">
+        {label}
+      </span>
       {children}
-      {error && <span className="mt-1 block text-xs text-red-700">{error}</span>}
+      {error && <span className="mt-2 block text-xs text-red-800">{error}</span>}
     </label>
   );
 }

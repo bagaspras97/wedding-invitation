@@ -218,6 +218,28 @@ export const wishes = [
   },
 ];
 
+export const giftIntro = {
+  title: "Love & Gift",
+  body:
+    "Your presence is our greatest gift. Should you wish to send a token of appreciation, you may do so via the virtual account or e-wallet below. Thank you for your love and generosity.",
+};
+
+export const giftAccounts = [
+  {
+    type: "Bank",
+    provider: "BCA",
+    number: "7380638945",
+    name: "Yolla Lisandra",
+  },
+  {
+    type: "E-Wallet",
+    provider: "GoPay",
+    number: "082249829966",
+    displayNumber: "082249829966",
+    name: "Prasetyo Laksono",
+  },
+];
+
 export const navLinks = [
   { href: "#acara", label: "Google Maps" },
   { href: "#cerita", label: "Love" },
