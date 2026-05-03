@@ -127,7 +127,7 @@ export const heroCollage = [
     // Kiri atas — wf 0.27 → fromXf = -(0.5+0.135) = -0.635
     src: "https://images.unsplash.com/photo-1502635385003-ee1e6a1a742d?auto=format&fit=crop&w=900&q=80",
     finalXf: -0.325,   // inner-edge: -0.325 + 0.135 = -0.19 ✓
-    yf: -0.21,
+    yf: -0.13,
     wf: 0.27,
     aspect: "4/3",
     fromXf: -0.64,
@@ -149,7 +149,7 @@ export const heroCollage = [
     // Kanan atas — wf 0.24 → fromXf = +(0.5+0.12) = +0.62
     src: "https://images.unsplash.com/photo-1519160558534-579f5106e43f?auto=format&fit=crop&w=900&q=80",
     finalXf: 0.31,     // inner-edge: 0.31 - 0.12 = +0.19 ✓
-    yf: -0.18,
+    yf: -0.11,
     wf: 0.24,
     aspect: "3/4",
     fromXf: 0.63,
