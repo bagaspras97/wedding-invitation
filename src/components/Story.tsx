@@ -243,7 +243,7 @@ function MobileStory({ progress }: { progress: MotionValue<number> }) {
           our story
         </h2>
 
-        <div className="relative mx-auto mt-5 h-[32vh] max-w-[680px]">
+        <div className="relative mx-auto mt-8 h-[32vh] max-w-[680px]">
           {storyMoments.map((item, index) => (
             <MobileChapterCopy
               key={`${item.chapter}-${item.momentIndex}`}
