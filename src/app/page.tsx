@@ -6,6 +6,7 @@ import SaveTheDate from "@/components/SaveTheDate";
 import Gallery from "@/components/Gallery";
 import Wishes from "@/components/Wishes";
 import Rsvp from "@/components/Rsvp";
+import CelebrationVision from "@/components/CelebrationVision";
 import LoveGift from "@/components/LoveGift";
 import Footer from "@/components/Footer";
 
@@ -21,6 +22,7 @@ export default function Page() {
         {/* <Gallery /> */}
         <Wishes />
         <Rsvp />
+        <CelebrationVision />
         <LoveGift />
       </main>
       <Footer />

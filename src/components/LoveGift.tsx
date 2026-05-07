@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { giftAccounts, giftIntro } from "@/lib/content";
+import SectionHeading from "./SectionHeading";
 
 export default function LoveGift() {
   const [copied, setCopied] = useState<string | null>(null);
@@ -17,21 +18,14 @@ export default function LoveGift() {
   return (
     <section id="gift" className="overflow-hidden bg-ivory px-6 py-24 md:py-36">
       <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-start md:gap-20">
-        <motion.div
-          initial={{ opacity: 0, y: 34 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-90px" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        <SectionHeading
+          align="start"
+          eyebrow="Love & Gift"
+          title="love gift"
+          description={giftIntro.body}
+          descriptionMaxWidth="max-w-md"
           className="md:sticky md:top-32"
-        >
-          <p className="eyebrow">Love & Gift</p>
-          <h2 className="mt-5 max-w-[8ch] font-display text-[clamp(4rem,9vw,8.2rem)] font-light leading-[0.86] tracking-[-0.065em] text-ink">
-            love gift
-          </h2>
-          <p className="mt-8 max-w-md text-base leading-relaxed text-stone md:text-lg">
-            {giftIntro.body}
-          </p>
-        </motion.div>
+        />
 
         <motion.div
           initial={{ opacity: 0, y: 42 }}

@@ -2,12 +2,14 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useState, type FormEvent } from "react";
+import Field from "./Field";
+import SectionHeading from "./SectionHeading";
 
 type FormState = {
   name: string;
   guests: string;
-  attendance: "hadir" | "tidak" | "";
+  attendance: "attending" | "declined" | "";
   message: string;
 };
 
@@ -27,8 +29,8 @@ export default function Rsvp() {
     event.preventDefault();
 
     const nextErrors: typeof errors = {};
-    if (!form.name.trim()) nextErrors.name = "Nama wajib diisi";
-    if (!form.attendance) nextErrors.attendance = "Pilih kehadiran";
+    if (!form.name.trim()) nextErrors.name = "Please enter your name";
+    if (!form.attendance) nextErrors.attendance = "Please choose your attendance";
 
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
@@ -39,23 +41,17 @@ export default function Rsvp() {
   };
 
   return (
-    <section id="rsvp" className="overflow-hidden bg-cream px-6 py-24 md:py-32">
+    <section id="rsvp" className="overflow-hidden bg-ivory px-6 py-24 md:py-32">
       <div className="mx-auto max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto max-w-3xl text-center"
-        >
-          <p className="eyebrow">Konfirmasi Kehadiran</p>
-          <h2 className="mt-5 font-display text-[clamp(4.5rem,10vw,8.5rem)] font-light leading-[0.86] tracking-[-0.06em] text-ink">
-            rsvp
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-stone md:text-base">
-            Mohon konfirmasi kehadiran agar kami dapat menyiapkan tempat dengan baik.
-          </p>
-        </motion.div>
+        <SectionHeading
+          eyebrow="Attendance"
+          title="rsvp"
+          description="Please confirm your attendance so we can prepare a seat with care."
+          size="lg"
+          descriptionMaxWidth="max-w-xl"
+          descriptionSize="compact"
+          className="mx-auto max-w-3xl"
+        />
 
         <div className="mx-auto mt-12 max-w-3xl md:mt-16">
           <motion.form
@@ -64,20 +60,20 @@ export default function Rsvp() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="rounded-[1.75rem] border border-ink/10 bg-ivory/70 p-5 shadow-[0_24px_80px_-62px_rgba(43,38,32,0.5)] backdrop-blur md:p-8"
+            className="border-y border-ink/12 py-10 md:py-12"
           >
             <div className="grid gap-5 md:grid-cols-2">
-              <Field label="Nama Lengkap" error={errors.name}>
+              <Field label="Full Name" error={errors.name}>
                 <input
                   type="text"
                   value={form.name}
                   onChange={(event) => update("name", event.target.value)}
                   className="input"
-                  placeholder="Nama Anda"
+                  placeholder="Your name"
                 />
               </Field>
 
-              <Field label="Jumlah Tamu">
+              <Field label="Number of Guests">
                 <select
                   value={form.guests}
                   onChange={(event) => update("guests", event.target.value)}
@@ -85,16 +81,16 @@ export default function Rsvp() {
                 >
                   {[1, 2, 3, 4].map((guests) => (
                     <option key={guests} value={guests}>
-                      {guests} orang
+                      {guests} {guests === 1 ? "guest" : "guests"}
                     </option>
                   ))}
                 </select>
               </Field>
             </div>
 
-            <Field label="Kehadiran" error={errors.attendance} className="mt-6">
+            <Field label="Attendance" error={errors.attendance} className="mt-6">
               <div className="grid grid-cols-2 gap-3">
-                {(["hadir", "tidak"] as const).map((attendance) => (
+                {(["attending", "declined"] as const).map((attendance) => (
                   <button
                     key={attendance}
                     type="button"
@@ -105,19 +101,19 @@ export default function Rsvp() {
                         : "border-ink/14 bg-cream/55 text-stone hover:border-accent hover:text-ink"
                     }`}
                   >
-                    {attendance === "hadir" ? "Akan Hadir" : "Berhalangan"}
+                    {attendance === "attending" ? "Attending" : "Unable to Attend"}
                   </button>
                 ))}
               </div>
             </Field>
 
-            <Field label="Ucapan & Doa" className="mt-6">
+            <Field label="Wishes & Prayers" className="mt-6">
               <textarea
                 value={form.message}
                 onChange={(event) => update("message", event.target.value)}
                 rows={5}
                 className="input resize-none"
-                placeholder="Tuliskan ucapan singkat untuk kami"
+                placeholder="Write a short wish for us"
               />
             </Field>
 
@@ -126,14 +122,14 @@ export default function Rsvp() {
                 type="submit"
                 className="rounded-full bg-ink px-8 py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-ivory shadow-[0_18px_48px_-32px_rgba(43,38,32,0.75)] transition duration-500 hover:scale-[1.01] hover:bg-accent active:scale-[0.99]"
               >
-                Kirim Konfirmasi
+                Send RSVP
               </button>
             </div>
           </motion.form>
         </div>
       </div>
 
-      <div className="pointer-events-none mx-auto mt-16 h-px max-w-5xl bg-gradient-to-r from-transparent via-ink/10 to-transparent md:mt-24" />
+      {/* <div className="pointer-events-none mx-auto mt-16 h-px max-w-5xl bg-gradient-to-r from-transparent via-ink/10 to-transparent md:mt-24" /> */}
 
       <AnimatePresence>
         {submitted && (
@@ -145,7 +141,7 @@ export default function Rsvp() {
             className="fixed bottom-8 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center gap-3 rounded-full bg-ink px-5 py-3 text-sm text-ivory shadow-[0_24px_80px_-40px_rgba(43,38,32,0.9)] md:w-auto md:px-6"
           >
             <Check size={16} className="shrink-0 text-accent" />
-            Konfirmasi Anda telah kami terima.
+            Your RSVP has been received.
           </motion.div>
         )}
       </AnimatePresence>
@@ -177,27 +173,5 @@ export default function Rsvp() {
         }
       `}</style>
     </section>
-  );
-}
-
-function Field({
-  label,
-  error,
-  children,
-  className = "",
-}: {
-  label: string;
-  error?: string;
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <label className={`block ${className}`}>
-      <span className="mb-2 block text-[10px] uppercase tracking-[0.28em] text-stone">
-        {label}
-      </span>
-      {children}
-      {error && <span className="mt-2 block text-xs text-red-800">{error}</span>}
-    </label>
   );
 }
