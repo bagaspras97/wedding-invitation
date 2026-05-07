@@ -4,10 +4,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCountdown } from "@/hooks/useCountdown";
 
 const labels: Record<string, string> = {
-  days: "Hari",
-  hours: "Jam",
-  minutes: "Menit",
-  seconds: "Detik",
+  days: "Days",
+  hours: "Hours",
+  minutes: "Minutes",
+  seconds: "Seconds",
 };
 
 export default function Countdown({ target }: { target: Date }) {
@@ -20,10 +20,10 @@ export default function Countdown({ target }: { target: Date }) {
   ];
 
   return (
-    <div className="mx-auto grid max-w-[660px] grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] items-start gap-2 md:gap-5">
+    <div className="mx-auto flex max-w-[700px] items-start justify-center">
       {items.map(({ key, value }, index) => (
-        <div key={key} className="contents">
-          <div className="flex min-w-0 flex-col items-center">
+        <div key={key} className="flex items-start">
+          <div className="flex w-[4.55rem] min-w-0 flex-col items-center sm:w-[5.8rem] md:w-[7.1rem]">
             <div className="relative h-12 w-full overflow-hidden md:h-16">
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span
@@ -43,7 +43,7 @@ export default function Countdown({ target }: { target: Date }) {
             </span>
           </div>
           {index < items.length - 1 && (
-            <span className="pt-0.5 font-display text-[clamp(1.95rem,5vw,3.65rem)] leading-none text-stone/35 md:pt-1">
+            <span className="flex w-5 justify-center pt-[0.42rem] font-display text-[clamp(1.65rem,4.2vw,2.8rem)] leading-none text-stone/35 sm:w-7 md:w-9 md:pt-[0.56rem]">
               :
             </span>
           )}
