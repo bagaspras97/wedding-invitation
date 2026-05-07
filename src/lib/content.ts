@@ -34,85 +34,98 @@ export const events = [
 
 export const story = [
   {
-    chapter: "Pertemuan",
-    chapterLabel: "chapter one: how we met",
-    title: "Awal Mula Cerita",
+    chapter: "A Story Written in Lemon Trees",
+    chapterLabel: "chapter one: a story written in lemon trees",
+    title: "A Story Written in Lemon Trees",
     body:
-      "Pertemuan pertama kami terjadi di sebuah kafe kecil di sudut kota. Hujan rintik membuat kami sama-sama berteduh, dan dari obrolan singkat itu, takdir mulai menulis bab pertamanya.",
-    caption: "Hari pertama cerita ini dimulai",
-    image:
-      "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80",
+      "It all began with playful midnight quizzes that led us to a now-vanished cafe called \"Mantra.\" There, over our first gift, the book As Long as the Lemon Trees Grow, we turned curious questions into a lifelong connection, beginning a journey that has led us to forever.",
+    caption: "The First Gift",
+    image: "/images/chapter1-story1.webp",
     moments: [
       {
         body:
-          "Pertemuan pertama kami terjadi di sebuah kafe kecil di sudut kota. Hujan rintik membuat kami sama-sama berteduh, dan dari obrolan singkat itu, takdir mulai menulis bab pertamanya.",
-        caption: "Hari pertama cerita ini dimulai",
-        image:
-          "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80",
+          "It all began with playful midnight quizzes that led us to a now-vanished cafe called \"Mantra.\" There, over our first gift, the book As Long as the Lemon Trees Grow, we turned curious questions into a lifelong connection, beginning a journey that has led us to forever.",
+        caption: "The First Gift",
+        image: "/images/chapter1-story1.webp",
       },
       {
         body:
-          "Dari percakapan sederhana, kami menemukan banyak hal yang terasa akrab. Sejak hari itu, pertemuan kecil berubah menjadi alasan untuk saling menunggu.",
-        caption: "Obrolan pertama yang terasa pulang",
-        image:
-          "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1400&q=80",
+          "Under the soft glow of twilight, we shared our first deep talk. In the stillness by the water, everything just seemed to click.",
+        caption:
+          "Under the soft glow of twilight, we shared our first deep talk. In the stillness by the water, everything just seemed to click.",
+        image: "/images/chapter1-story2.jpeg",
+      },
+      {
+        body:
+          "From one cafe to the next, every little stop became another page in the story we were slowly writing together.",
+        caption: "Cafe Hoping",
+        image: "/images/chapter1-story-3.jpeg",
       },
     ],
   },
   {
-    chapter: "Jatuh Cinta",
-    chapterLabel: "chapter two: falling in love",
-    title: "Tumbuh Bersama",
+    chapter: "Our First Silver Screen Date",
+    chapterLabel: "chapter two: our first silver screen date",
+    title: "Our First Silver Screen Date",
     body:
-      "Hari demi hari kami habiskan dengan tertawa, berbagi mimpi, dan saling memahami. Cinta tumbuh perlahan — tidak terburu-buru, namun pasti.",
-    caption: "Obrolan kecil yang menjadi rumah",
-    image:
-      "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1400&q=80",
+      "Just like Roz and Brightbill's unlikely friendship, our first movie date with The Wild Robot sparked an enchanting adventure of our very own.",
+    caption: "",
+    image: "/images/chapter2-story1.webp",
     moments: [
       {
         body:
-          "Hari demi hari kami habiskan dengan tertawa, berbagi mimpi, dan saling memahami. Cinta tumbuh perlahan — tidak terburu-buru, namun pasti.",
-        caption: "Obrolan kecil yang menjadi rumah",
-        image:
-          "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1400&q=80",
+          "Just like Roz and Brightbill's unlikely friendship, our first movie date with The Wild Robot sparked an enchanting adventure of our very own.",
+        caption: "",
+        image: "/images/chapter2-story1.webp",
       },
       {
         body:
-          "Kami belajar bahwa cinta sering hadir dalam hal-hal sederhana: perjalanan singkat, rencana kecil, dan kebiasaan saling mengabari.",
-        caption: "Hari-hari yang membuat kami yakin",
-        image:
-          "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1400&q=80",
+          "Family, nature, and a perfect toast at 846 MDPL. Simply unforgettable.",
+        caption: "Family, nature, and a perfect toast at 846 MDPL. Simply unforgettable.",
+        image: "/images/chapter2-story2.jpeg",
+      },
+      {
+        body:
+          "Two canvases, one shared memory. Just like these colors blending together, our stories have woven into a beautiful masterpiece of our own.",
+        caption:
+          "Two canvases, one shared memory. Just like these colors blending together, our stories have woven into a beautiful masterpiece of our own.",
+        image: "/images/chapter2-story3.jpeg",
       },
     ],
   },
   {
-    chapter: "Lamaran",
+    chapter: "The Next Step",
     chapterLabel: "chapter three: the next step",
-    title: "Janji Selamanya",
+    title: "The Next Step",
     body:
-      "Di bawah langit senja, dengan keluarga sebagai saksi, sebuah cincin diberikan dan jawaban 'iya' menjadi awal dari komitmen kami untuk hidup bersama selamanya.",
-    caption: "Satu jawaban untuk selamanya",
-    image:
-      "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1400&q=80",
+      "A trip, a question, a very easy yes, and suddenly the future we had been imagining became something we could invite everyone into.",
+    caption:
+      "Just us, the open sky, and a whole lot of reasons to smile. Today is a good day.",
+    image: "/images/chapter3-story1.jpeg",
     moments: [
       {
         body:
-          "Di bawah langit senja, dengan keluarga sebagai saksi, sebuah cincin diberikan dan jawaban 'iya' menjadi awal dari komitmen kami untuk hidup bersama selamanya.",
-        caption: "Satu jawaban untuk selamanya",
-        image:
-          "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1400&q=80",
+          "A trip, a question, a very easy yes, and suddenly the future we had been imagining became something we could invite everyone into.",
+        caption:
+          "Just us, the open sky, and a whole lot of reasons to smile. Today is a good day.",
+        image: "/images/chapter3-story1.jpeg",
       },
       {
         body:
-          "Sejak hari itu, kami tidak hanya merayakan cinta, tetapi juga memulai perjalanan baru: membangun rumah, doa, dan masa depan bersama.",
-        caption: "Merayakan langkah baru",
-        image:
-          "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=1400&q=80",
+          "Wrapped in shadows, anchored by love. Under this golden light, we begin our forever.",
+        caption:
+          "Wrapped in shadows, anchored by love. Under this golden light, we begin our forever.",
+        image: "/images/chapter3-story2.jpg",
+      },
+      {
+        body:
+          "Together with the people we love, this joy became something brighter, warmer, and worth celebrating.",
+        caption: "Celebrating together",
+        image: "/images/chapter3-story3.jpg",
       },
     ],
   },
 ];
-
 export const heroImage = "/images/hero.jpg";
 
 // Collage foto yang slide in dari luar layar saat scroll hero.
@@ -171,8 +184,7 @@ export const heroCollage = [
   },
 ];
 
-export const venueImage =
-  "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=2200&q=85";
+export const venueImage = "/images/location.png";
 
 export const gallery = [
   "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1400&q=80",
