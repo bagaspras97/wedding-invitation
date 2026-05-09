@@ -1,4 +1,5 @@
 import Nav from "@/components/Nav";
+import InvitationCover from "@/components/InvitationCover";
 import Hero from "@/components/Hero";
 import InvitationIntro from "@/components/InvitationIntro";
 import Story from "@/components/Story";
@@ -13,6 +14,7 @@ import Footer from "@/components/Footer";
 export default function Page() {
   return (
     <>
+      <InvitationCover />
       <Nav />
       <main>
         <Hero />
@@ -22,8 +24,8 @@ export default function Page() {
         {/* <Gallery /> */}
         <Wishes />
         <Rsvp />
-        <CelebrationVision />
         <LoveGift />
+        <CelebrationVision />
       </main>
       <Footer />
     </>

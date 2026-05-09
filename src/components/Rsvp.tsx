@@ -10,23 +10,26 @@ type FormState = {
   name: string;
   guests: string;
   attendance: "attending" | "declined" | "";
-  message: string;
 };
 
-const empty: FormState = { name: "", guests: "1", attendance: "", message: "" };
+const empty: FormState = { name: "", guests: "1", attendance: "" };
 
 export default function Rsvp() {
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [submitError, setSubmitError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((current) => ({ ...current, [key]: value }));
     setErrors((current) => ({ ...current, [key]: undefined }));
+    setSubmitError("");
   };
 
-  const onSubmit = (event: FormEvent) => {
+  const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (isSubmitting) return;
 
     const nextErrors: typeof errors = {};
     if (!form.name.trim()) nextErrors.name = "Please enter your name";
@@ -35,9 +38,33 @@ export default function Rsvp() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    setSubmitted(true);
-    setForm(empty);
-    setTimeout(() => setSubmitted(false), 4500);
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          attendance: form.attendance,
+          guests: Number(form.guests),
+        }),
+      });
+      const result = (await response.json().catch(() => ({}))) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(result.error || "Unable to send RSVP right now.");
+      }
+
+      setSubmitted(true);
+      setForm(empty);
+      setTimeout(() => setSubmitted(false), 4500);
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Unable to send RSVP right now.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -107,24 +134,21 @@ export default function Rsvp() {
               </div>
             </Field>
 
-            <Field label="Wishes & Prayers" className="mt-6">
-              <textarea
-                value={form.message}
-                onChange={(event) => update("message", event.target.value)}
-                rows={5}
-                className="input resize-none"
-                placeholder="Write a short wish for us"
-              />
-            </Field>
-
             <div className="mt-8 flex justify-center md:justify-end">
               <button
                 type="submit"
-                className="rounded-full bg-ink px-8 py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-ivory shadow-[0_18px_48px_-32px_rgba(43,38,32,0.75)] transition duration-500 hover:scale-[1.01] hover:bg-accent active:scale-[0.99]"
+                disabled={isSubmitting}
+                className="rounded-full bg-ink px-8 py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-ivory shadow-[0_18px_48px_-32px_rgba(43,38,32,0.75)] transition duration-500 hover:scale-[1.01] hover:bg-accent active:scale-[0.99] disabled:cursor-wait disabled:opacity-60 disabled:hover:scale-100"
               >
-                Send RSVP
+                {isSubmitting ? "Sending..." : "Send RSVP"}
               </button>
             </div>
+
+            {submitError && (
+              <p className="mt-5 text-center text-sm leading-relaxed text-red-800 md:text-right">
+                {submitError}
+              </p>
+            )}
           </motion.form>
         </div>
       </div>

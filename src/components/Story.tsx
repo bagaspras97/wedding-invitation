@@ -304,19 +304,10 @@ function MobileChapterCopy({
       ? [0, 1, 1]
       : [index === 0 ? 1 : 0, 1, 1, 0]
   );
-  const y = useTransform(
-    progress,
-    isLast
-      ? [Math.max(0, enter - span * 0.04), arrive, 1]
-      : [Math.max(0, enter - span * 0.04), arrive, exitEnd],
-    isLast
-      ? [16, 0, 0]
-      : [16, 0, -18]
-  );
 
   return (
     <motion.article
-      style={{ opacity, y }}
+      style={{ opacity }}
       className="absolute inset-0 text-center"
     >
       <p className="text-[clamp(1.28rem,4.55vw,1.85rem)] font-semibold leading-tight tracking-[-0.025em] text-ink">

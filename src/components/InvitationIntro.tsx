@@ -14,7 +14,10 @@ export default function InvitationIntro() {
   const words = introText.split(" ");
 
   return (
-    <section ref={ref} className="bg-ivory px-6 py-28 md:py-44">
+    <section
+      ref={ref}
+      className="relative z-10 -mt-[10dvh] bg-ivory px-6 pb-28 pt-24 md:-mt-[8vh] md:pb-44 md:pt-36"
+    >
       <motion.h2
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}

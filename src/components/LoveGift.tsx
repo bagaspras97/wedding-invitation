@@ -65,7 +65,7 @@ export default function LoveGift() {
                     ) : (
                       <Copy size={14} strokeWidth={1.8} />
                     )}
-                    {copied === account.number ? "Tersalin" : "Salin"}
+                    {copied === account.number ? "Copied" : "Copy"}
                   </button>
                 </div>
               </div>
@@ -76,16 +76,18 @@ export default function LoveGift() {
 
       <AnimatePresence>
         {copied && (
-          <motion.div
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 18 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-8 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full bg-ink px-5 py-3 text-sm text-ivory shadow-[0_24px_80px_-40px_rgba(43,38,32,0.9)]"
-          >
-            <Check size={16} className="text-accent" />
-            Nomor berhasil disalin.
-          </motion.div>
+          <div className="fixed bottom-6 left-1/2 z-50 w-[calc(100%-3rem)] max-w-xs -translate-x-1/2 md:bottom-8 md:left-auto md:right-8 md:w-auto md:max-w-none md:translate-x-0">
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 18 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center justify-center gap-3 rounded-full bg-ink px-5 py-3 text-center text-sm text-ivory shadow-[0_24px_80px_-40px_rgba(43,38,32,0.9)] md:px-6"
+            >
+              <Check size={16} className="shrink-0 text-accent" />
+              Number copied.
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </section>
