@@ -18,6 +18,7 @@ type AdminData = {
 type InviteMode = "template" | "free";
 
 const STORAGE_KEY = "yolla-pras-admin-password";
+const INVITATION_ORIGIN = "https://yollapras.vercel.app";
 
 const emptyData: AdminData = {
   rsvps: [],
@@ -45,7 +46,7 @@ const attendanceLabel: Record<Attendance, string> = {
 
 const defaultInviteText = `Assalamualaikum Wr. Wb.
 
-Dengan penuh rasa syukur dan kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri dan memberikan doa restu pada acara pernikahan kami:
+Dengan penuh rasa syukur dan kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i {{guestName}} untuk menghadiri dan memberikan doa restu pada acara pernikahan kami:
 
 Yolla & Pras
 
@@ -63,7 +64,7 @@ Wassalamualaikum Wr. Wb.`;
 const buildInvitationUrl = (guestName: string) => {
   if (typeof window === "undefined") return "";
 
-  const url = new URL(window.location.origin);
+  const url = new URL(INVITATION_ORIGIN);
   const trimmedName = guestName.trim();
 
   if (trimmedName) {
@@ -134,8 +135,10 @@ export default function AdminDashboard() {
       return freeInviteText || invitationUrl;
     }
 
-    return defaultInviteText.replace("{{link}}", invitationUrl);
-  }, [freeInviteText, invitationUrl, inviteMode]);
+    return defaultInviteText
+      .replace("{{guestName}}", inviteGuest.trim() || "Tamu Undangan")
+      .replace("{{link}}", invitationUrl);
+  }, [freeInviteText, invitationUrl, inviteGuest, inviteMode]);
   const whatsappUrl = useMemo(() => {
     const normalizedPhone = normalizeWhatsappNumber(invitePhone);
     if (!normalizedPhone) return "";

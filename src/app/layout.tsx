@@ -15,10 +15,37 @@ const body = Inter({
   variable: "--font-body",
 });
 
+const title = "Yolla & Pras - Undangan Pernikahan";
+const description =
+  "Dengan penuh sukacita, kami mengundang Anda untuk hadir dalam hari bahagia kami.";
+const coverImage = "/images/chapter3-story2.jpg";
+
 export const metadata: Metadata = {
-  title: "Yolla & Pras  — Undangan Pernikahan",
-  description:
-    "Dengan penuh sukacita, kami mengundang Anda untuk hadir dalam hari bahagia kami.",
+  metadataBase: new URL("https://yollapras.vercel.app"),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: "https://yollapras.vercel.app",
+    siteName: "Yolla & Pras",
+    images: [
+      {
+        url: coverImage,
+        width: 1200,
+        height: 630,
+        alt: "Yolla dan Pras",
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [coverImage],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
