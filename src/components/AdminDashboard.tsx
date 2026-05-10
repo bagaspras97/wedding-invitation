@@ -44,22 +44,22 @@ const attendanceLabel: Record<Attendance, string> = {
   declined: "Unable",
 };
 
-const defaultInviteText = `Assalamualaikum Wr. Wb.
+const defaultInviteText = `*Assalamualaikum Wr. Wb.*
 
-Dengan penuh rasa syukur dan kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i {{guestName}} untuk menghadiri dan memberikan doa restu pada acara pernikahan kami:
+Dengan penuh rasa syukur dan kebahagiaan, kami mengundang *Bapak/Ibu/Saudara/i {{guestName}}* untuk menghadiri dan memberikan doa restu pada acara pernikahan kami:
 
-Yolla & Pras
+*Yolla & Pras*
 
 Yang akan dilaksanakan pada:
-Hari, Tanggal : Sabtu, 6 Juni 2026
-Tempat        : Villa Edwin, Sirnagalih, Bogor
+*Hari, Tanggal* : Sabtu, 6 Juni 2026
+*Tempat*        : Villa Edwin, Sirnagalih, Bogor
 
 Untuk informasi lebih lanjut, silakan membuka undangan melalui tautan berikut:
 {{link}}
 
-Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir serta memberikan doa restu.
+_Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir serta memberikan doa restu._
 
-Wassalamualaikum Wr. Wb.`;
+*Wassalamualaikum Wr. Wb.*`;
 
 const buildInvitationUrl = (guestName: string) => {
   if (typeof window === "undefined") return "";
