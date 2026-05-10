@@ -10,12 +10,14 @@ import Rsvp from "@/components/Rsvp";
 import CelebrationVision from "@/components/CelebrationVision";
 import LoveGift from "@/components/LoveGift";
 import Footer from "@/components/Footer";
+import MusicDock from "@/components/MusicDock";
 
 export default function Page() {
   return (
     <>
       <InvitationCover />
       <Nav />
+      <MusicDock />
       <main>
         <Hero />
         <InvitationIntro />

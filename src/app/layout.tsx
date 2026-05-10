@@ -16,7 +16,7 @@ const body = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Prasetyo & Yolla — Undangan Pernikahan",
+  title: "Yolla & Pras  — Undangan Pernikahan",
   description:
     "Dengan penuh sukacita, kami mengundang Anda untuk hadir dalam hari bahagia kami.",
 };

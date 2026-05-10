@@ -75,6 +75,7 @@ export default function InvitationCover() {
 
   const openInvitation = () => {
     openToTopRef.current = true;
+    window.dispatchEvent(new Event("invitation:open"));
     setIsOpening(true);
     window.setTimeout(() => setVisible(false), reduceMotion ? 0 : 180);
   };
