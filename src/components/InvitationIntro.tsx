@@ -4,6 +4,16 @@ import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "fr
 import { useRef } from "react";
 
 const introText = "you're cordially invited to celebrate the story of...";
+const coupleDetails = [
+  {
+    name: "Yolla Lisandra, S.Pd., Gr.",
+    family: "First daughter of Suprapto and Herliana Kusuma Atmaja",
+  },
+  {
+    name: "Prasetyo Laksono, S.Kom.",
+    family: "First son of (Alm) Prayogo and Siti Suparnidjah",
+  },
+];
 
 export default function InvitationIntro() {
   const ref = useRef<HTMLElement>(null);
@@ -20,6 +30,7 @@ export default function InvitationIntro() {
   const y = useTransform(progress, [0, 1], reduceMotion ? [0, 0] : [18, -10]);
   const opacity = useTransform(progress, [0, 0.16, 1], [0.72, 1, 1]);
   const scale = useTransform(progress, [0, 1], reduceMotion ? [1, 1] : [0.985, 1]);
+  const textRevealProgress = useTransform(progress, [0, 0.46], [0, 1]);
   const words = introText.split(" ");
 
   return (
@@ -48,7 +59,7 @@ export default function InvitationIntro() {
                   char={char}
                   index={previousLength + charIndex}
                   total={introText.replaceAll(" ", "").length}
-                  progress={progress}
+                  progress={textRevealProgress}
                   reduceMotion={reduceMotion}
                 />
               ))}
@@ -59,6 +70,35 @@ export default function InvitationIntro() {
           );
         })}
       </motion.h2>
+
+      <motion.div
+        initial={{ opacity: 0, y: 26 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+        className="relative mx-auto mt-14 grid max-w-5xl gap-8 border-y border-ink/10 py-9 text-center md:mt-18 md:grid-cols-[1fr_auto_1fr] md:items-center md:gap-8 md:py-11"
+      >
+        {coupleDetails.map((person, index) => (
+          <div key={person.name} className="contents">
+            {index === 1 ? (
+              <div
+                aria-hidden="true"
+                className="mx-auto -my-2 grid size-16 place-items-center rounded-full border border-ink/10 bg-ivory font-display text-5xl font-light italic leading-none text-stone md:my-0 md:size-20 md:text-6xl"
+              >
+                &
+              </div>
+            ) : null}
+            <article className="px-2">
+              <h3 className="font-display text-[clamp(2.05rem,8vw,3.35rem)] font-light italic leading-[0.95] text-ink md:text-[clamp(2.25rem,3.7vw,4rem)]">
+                {person.name}
+              </h3>
+              <p className="mx-auto mt-4 max-w-[21rem] text-sm uppercase leading-[1.75] tracking-[0.18em] text-stone md:text-[0.76rem]">
+                {person.family}
+              </p>
+            </article>
+          </div>
+        ))}
+      </motion.div>
     </section>
   );
 }
