@@ -12,12 +12,23 @@ type WishItem = {
   name: string;
   relation?: string;
   message: string;
+  created_at?: string;
 };
 
 const fallbackWishes: WishItem[] = wishes.map((wish, index) => ({
   id: `sample-${index}`,
   ...wish,
 }));
+
+const formatWishDate = (value?: string) => {
+  if (!value) return "";
+
+  return new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(value));
+};
 
 export default function Wishes() {
   const reduceMotion = useReducedMotion();
@@ -209,6 +220,11 @@ export default function Wishes() {
                     <p className="font-display text-[clamp(1.5rem,2.4vw,2.45rem)] leading-none tracking-[-0.04em] text-ink">
                       {wish.name}
                     </p>
+                    {formatWishDate(wish.created_at) && (
+                      <p className="mt-2 text-[10px] uppercase tracking-[0.24em] text-stone/60">
+                        {formatWishDate(wish.created_at)}
+                      </p>
+                    )}
                     {wish.relation && (
                       <p className="mt-3 text-[10px] uppercase tracking-[0.3em] text-stone/70">
                         {wish.relation}
@@ -284,6 +300,11 @@ export default function Wishes() {
                         <p className="font-display text-[clamp(1.45rem,2.5vw,2.4rem)] leading-none tracking-[-0.04em] text-ink">
                           {wish.name}
                         </p>
+                        {formatWishDate(wish.created_at) && (
+                          <p className="mt-2 text-[9px] uppercase tracking-[0.24em] text-stone/60">
+                            {formatWishDate(wish.created_at)}
+                          </p>
+                        )}
                         {wish.relation && (
                           <p className="mt-2 text-[9px] uppercase tracking-[0.28em] text-stone/70">
                             {wish.relation}
