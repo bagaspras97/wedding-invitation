@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import Field from "./Field";
@@ -15,6 +15,7 @@ type FormState = {
 const empty: FormState = { name: "", guests: "1", attendance: "" };
 
 export default function Rsvp() {
+  const reduceMotion = useReducedMotion();
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [submitError, setSubmitError] = useState("");
@@ -83,13 +84,19 @@ export default function Rsvp() {
         <div className="mx-auto mt-12 max-w-3xl md:mt-16">
           <motion.form
             onSubmit={onSubmit}
-            initial={{ opacity: 0, y: 42 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 34 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.78, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="border-y border-ink/12 py-10 md:py-12"
           >
-            <div className="grid gap-5 md:grid-cols-2">
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.62, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+              className="grid gap-5 md:grid-cols-2"
+            >
               <Field label="Full Name" error={errors.name}>
                 <input
                   type="text"
@@ -113,15 +120,23 @@ export default function Rsvp() {
                   ))}
                 </select>
               </Field>
-            </div>
+            </motion.div>
 
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.62, delay: 0.26, ease: [0.22, 1, 0.36, 1] }}
+            >
             <Field label="Attendance" error={errors.attendance} className="mt-6">
               <div className="grid grid-cols-2 gap-3">
                 {(["attending", "declined"] as const).map((attendance) => (
-                  <button
+                  <motion.button
                     key={attendance}
                     type="button"
                     onClick={() => update("attendance", attendance)}
+                    whileHover={reduceMotion ? undefined : { y: -2 }}
+                    whileTap={reduceMotion ? undefined : { scale: 0.985 }}
                     className={`min-h-12 rounded-full border px-4 py-3 text-[11px] font-medium uppercase tracking-[0.22em] transition duration-300 active:scale-[0.98] ${
                       form.attendance === attendance
                         ? "border-ink bg-ink text-ivory shadow-[0_16px_38px_-28px_rgba(43,38,32,0.75)]"
@@ -129,20 +144,29 @@ export default function Rsvp() {
                     }`}
                   >
                     {attendance === "attending" ? "Attending" : "Unable to Attend"}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </Field>
+            </motion.div>
 
-            <div className="mt-8 flex justify-center md:justify-end">
-              <button
+            <motion.div
+              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+              whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.62, delay: 0.34, ease: [0.22, 1, 0.36, 1] }}
+              className="mt-8 flex justify-center md:justify-end"
+            >
+              <motion.button
                 type="submit"
                 disabled={isSubmitting}
+                whileHover={reduceMotion || isSubmitting ? undefined : { scale: 1.015 }}
+                whileTap={reduceMotion || isSubmitting ? undefined : { scale: 0.985 }}
                 className="rounded-full bg-ink px-8 py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-ivory shadow-[0_18px_48px_-32px_rgba(43,38,32,0.75)] transition duration-500 hover:scale-[1.01] hover:bg-accent active:scale-[0.99] disabled:cursor-wait disabled:opacity-60 disabled:hover:scale-100"
               >
                 {isSubmitting ? "Sending..." : "Send RSVP"}
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
 
             {submitError && (
               <p className="mt-5 text-center text-sm leading-relaxed text-red-800 md:text-right">
@@ -158,11 +182,11 @@ export default function Rsvp() {
       <AnimatePresence>
         {submitted && (
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 22, scale: 0.98 }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.98 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-8 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center gap-3 rounded-full bg-ink px-5 py-3 text-sm text-ivory shadow-[0_24px_80px_-40px_rgba(43,38,32,0.9)] md:w-auto md:px-6"
+            className="fixed bottom-6 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center justify-center gap-3 rounded-full bg-ink px-5 py-3 text-center text-sm text-ivory shadow-[0_24px_80px_-40px_rgba(43,38,32,0.9)] md:bottom-8 md:left-auto md:right-8 md:w-auto md:max-w-none md:translate-x-0 md:px-6"
           >
             <Check size={16} className="shrink-0 text-accent" />
             Your RSVP has been received.

@@ -1,12 +1,13 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { giftAccounts, giftIntro } from "@/lib/content";
 import SectionHeading from "./SectionHeading";
 
 export default function LoveGift() {
+  const reduceMotion = useReducedMotion();
   const [copied, setCopied] = useState<string | null>(null);
 
   const copyAccount = async (value: string) => {
@@ -20,7 +21,7 @@ export default function LoveGift() {
       <div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-start md:gap-20">
         <SectionHeading
           align="start"
-          eyebrow="Love & Gift"
+          eyebrow="With Gratitude"
           title="love gift"
           description={giftIntro.body}
           descriptionMaxWidth="max-w-md"
@@ -28,16 +29,21 @@ export default function LoveGift() {
         />
 
         <motion.div
-          initial={{ opacity: 0, y: 42 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 34 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.9, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.75, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           className="border-y border-ink/12"
         >
           {giftAccounts.map((account, index) => (
-            <article
+            <motion.article
               key={account.number}
-              className={`group py-8 md:py-10 ${index > 0 ? "border-t border-ink/12" : ""}`}
+              initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+              whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              whileHover={reduceMotion ? undefined : { y: -4 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.62, delay: 0.16 + index * 0.06, ease: [0.22, 1, 0.36, 1] }}
+              className={`group py-8 transition-colors duration-500 hover:border-ink/22 md:py-10 ${index > 0 ? "border-t border-ink/12" : ""}`}
             >
               <div className="grid gap-6 md:grid-cols-[0.72fr_1fr] md:items-end md:gap-10">
                 <div>
@@ -55,9 +61,11 @@ export default function LoveGift() {
                   <p className="mt-4 text-sm leading-relaxed text-stone md:text-base">
                     a/n {account.name}
                   </p>
-                  <button
+                  <motion.button
                     type="button"
                     onClick={() => copyAccount(account.number)}
+                    whileHover={reduceMotion ? undefined : { scale: 1.015, y: -1 }}
+                    whileTap={reduceMotion ? undefined : { scale: 0.985 }}
                     className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full border border-ink/14 px-5 py-3 text-[10px] font-medium uppercase tracking-[0.22em] text-ink transition duration-500 hover:border-ink hover:bg-ink hover:text-ivory active:scale-[0.98]"
                   >
                     {copied === account.number ? (
@@ -66,10 +74,10 @@ export default function LoveGift() {
                       <Copy size={14} strokeWidth={1.8} />
                     )}
                     {copied === account.number ? "Copied" : "Copy"}
-                  </button>
+                  </motion.button>
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
         </motion.div>
       </div>
@@ -78,9 +86,9 @@ export default function LoveGift() {
         {copied && (
           <div className="fixed bottom-6 left-1/2 z-50 w-[calc(100%-3rem)] max-w-xs -translate-x-1/2 md:bottom-8 md:left-auto md:right-8 md:w-auto md:max-w-none md:translate-x-0">
             <motion.div
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 18 }}
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.98 }}
+              animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.98 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center justify-center gap-3 rounded-full bg-ink px-5 py-3 text-center text-sm text-ivory shadow-[0_24px_80px_-40px_rgba(43,38,32,0.9)] md:px-6"
             >

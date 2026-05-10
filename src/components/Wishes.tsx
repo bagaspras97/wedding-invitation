@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
 import { wishes } from "@/lib/content";
@@ -20,6 +20,7 @@ const fallbackWishes: WishItem[] = wishes.map((wish, index) => ({
 }));
 
 export default function Wishes() {
+  const reduceMotion = useReducedMotion();
   const [items, setItems] = useState<WishItem[]>(fallbackWishes);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -125,10 +126,10 @@ export default function Wishes() {
         <div className="mt-16 grid gap-14 md:mt-24 md:grid-cols-[0.8fr_1.2fr] md:gap-20">
           <motion.form
             onSubmit={onSubmit}
-            initial={{ opacity: 0, y: 34 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+            whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
             className="md:sticky md:top-32"
           >
             <div className="border-y border-ink/12 py-8">
@@ -162,13 +163,15 @@ export default function Wishes() {
                 </Field>
               </div>
 
-              <button
+              <motion.button
                 type="submit"
                 disabled={isSubmitting}
+                whileHover={reduceMotion || isSubmitting ? undefined : { scale: 1.012, y: -1 }}
+                whileTap={reduceMotion || isSubmitting ? undefined : { scale: 0.985 }}
                 className="mt-8 w-full rounded-full bg-ink px-6 py-4 text-xs font-medium uppercase tracking-[0.24em] text-ivory shadow-[0_18px_48px_-32px_rgba(43,38,32,0.75)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.01] active:scale-[0.99] disabled:cursor-wait disabled:opacity-60 disabled:hover:scale-100"
               >
                 {isSubmitting ? "Sending..." : "Send Wishes"}
-              </button>
+              </motion.button>
 
               {(error || success) && (
                 <p
@@ -194,11 +197,12 @@ export default function Wishes() {
             {visibleWishes.map((wish, index) => (
               <motion.article
                 key={wish.id}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+                whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                whileHover={reduceMotion ? undefined : { y: -3 }}
                 viewport={{ once: true, margin: "-70px" }}
-                transition={{ duration: 0.8, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
-                className="group border-b border-ink/12 py-6 md:py-8"
+                transition={{ duration: 0.68, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                className="group border-b border-ink/12 py-6 transition-colors duration-500 hover:border-ink/22 md:py-8"
               >
                 <div className="grid gap-5 md:grid-cols-[0.42fr_1fr] md:gap-10">
                   <div>
@@ -220,13 +224,15 @@ export default function Wishes() {
 
             {items.length > visibleWishes.length && (
               <div className="pt-7 text-center md:text-left">
-                <button
+                <motion.button
                   type="button"
                   onClick={() => setShowAll(true)}
+                  whileHover={reduceMotion ? undefined : { y: -2 }}
+                  whileTap={reduceMotion ? undefined : { scale: 0.985 }}
                   className="inline-flex min-h-11 items-center justify-center rounded-full border border-ink/14 px-6 py-3 text-[10px] font-medium uppercase tracking-[0.22em] text-ink transition duration-500 hover:border-ink hover:bg-ink hover:text-ivory active:scale-[0.98]"
                 >
                   View all wishes
-                </button>
+                </motion.button>
               </div>
             )}
           </div>
@@ -240,14 +246,14 @@ export default function Wishes() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: reduceMotion ? 0.12 : 0.25 }}
             onClick={() => setShowAll(false)}
           >
             <motion.div
               className="mx-auto flex h-full max-w-4xl flex-col overflow-hidden rounded-[1.75rem] bg-ivory shadow-[0_30px_120px_-50px_rgba(43,38,32,0.85)]"
-              initial={{ opacity: 0, y: 34, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 18, scale: 0.985 }}
+              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 30, scale: 0.985 }}
+              animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16, scale: 0.99 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               onClick={(event) => event.stopPropagation()}
             >
@@ -258,14 +264,16 @@ export default function Wishes() {
                     all wishes
                   </p>
                 </div>
-                <button
+                <motion.button
                   type="button"
                   onClick={() => setShowAll(false)}
+                  whileHover={reduceMotion ? undefined : { rotate: 4, scale: 1.04 }}
+                  whileTap={reduceMotion ? undefined : { scale: 0.94 }}
                   className="grid size-11 place-items-center rounded-full border border-ink/12 text-ink transition duration-300 hover:border-ink hover:bg-ink hover:text-ivory"
                   aria-label="Close wishes"
                 >
                   <X size={18} strokeWidth={1.7} />
-                </button>
+                </motion.button>
               </div>
 
               <div className="overflow-y-auto px-6 md:px-8">

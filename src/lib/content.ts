@@ -40,13 +40,13 @@ export const story = [
     body:
       "It all began with playful midnight quizzes that led us to a now-vanished cafe called \"Mantra.\" There, over our first gift, the book As Long as the Lemon Trees Grow, we turned curious questions into a lifelong connection, beginning a journey that has led us to forever.",
     caption: "The First Gift",
-    image: "/images/chapter1-story1.webp",
+    image: "/images/chapter1-story1.jpeg",
     moments: [
       {
         body:
           "It all began with playful midnight quizzes that led us to a now-vanished cafe called \"Mantra.\" There, over our first gift, the book As Long as the Lemon Trees Grow, we turned curious questions into a lifelong connection, beginning a journey that has led us to forever.",
         caption: "The First Gift",
-        image: "/images/chapter1-story1.webp",
+        image: "/images/chapter1-story1.jpeg",
       },
       {
         body:
@@ -78,19 +78,19 @@ export const story = [
         caption: "",
         image: "/images/chapter2-story1.webp",
       },
-      {
-        body:
-          "Family, nature, and a perfect toast at 846 MDPL. Simply unforgettable.",
-        caption: "Family, nature, and a perfect toast at 846 MDPL. Simply unforgettable.",
-        image: "/images/chapter2-story2.jpeg",
-      },
-      {
-        body:
-          "Two canvases, one shared memory. Just like these colors blending together, our stories have woven into a beautiful masterpiece of our own.",
-        caption:
-          "Two canvases, one shared memory. Just like these colors blending together, our stories have woven into a beautiful masterpiece of our own.",
-        image: "/images/chapter2-story3.jpeg",
-      },
+      // {
+      //   body:
+      //     "Family, nature, and a perfect toast at 846 MDPL. Simply unforgettable.",
+      //   caption: "Family, nature, and a perfect toast at 846 MDPL. Simply unforgettable.",
+      //   image: "/images/chapter2-story2.jpeg",
+      // },
+      // {
+      //   body:
+      //     "Two canvases, one shared memory. Just like these colors blending together, our stories have woven into a beautiful masterpiece of our own.",
+      //   caption:
+      //     "Two canvases, one shared memory. Just like these colors blending together, our stories have woven into a beautiful masterpiece of our own.",
+      //   image: "/images/chapter2-story3.jpeg",
+      // },
     ],
   },
   {
@@ -103,13 +103,13 @@ export const story = [
       "Just us, the open sky, and a whole lot of reasons to smile. Today is a good day.",
     image: "/images/chapter3-story1.jpeg",
     moments: [
-      {
-        body:
-          "A trip, a question, a very easy yes, and suddenly the future we had been imagining became something we could invite everyone into.",
-        caption:
-          "Just us, the open sky, and a whole lot of reasons to smile. Today is a good day.",
-        image: "/images/chapter3-story1.jpeg",
-      },
+      // {
+      //   body:
+      //     "A trip, a question, a very easy yes, and suddenly the future we had been imagining became something we could invite everyone into.",
+      //   caption:
+      //     "Just us, the open sky, and a whole lot of reasons to smile. Today is a good day.",
+      //   image: "/images/chapter3-story1.jpeg",
+      // },
       {
         body:
           "Wrapped in shadows, anchored by love. Under this golden light, we begin our forever.",
@@ -140,45 +140,45 @@ export const heroImage = "/images/hero.jpg";
 export const heroCollage = [
   {
     // Kiri atas — wf 0.27 → fromXf = -(0.5+0.135) = -0.635
-    src: "https://images.unsplash.com/photo-1502635385003-ee1e6a1a742d?auto=format&fit=crop&w=900&q=80",
-    finalXf: -0.325,   // inner-edge: -0.325 + 0.135 = -0.19 ✓
-    yf: -0.13,
-    wf: 0.27,
-    aspect: "4/3",
-    fromXf: -0.64,
+    src: "/images/yp1.jpeg",
+    finalXf: -0.345,   // inner-edge: -0.345 + 0.0925 = -0.2525
+    yf: -0.22,
+    wf: 0.185,
+    aspect: "3/4",
+    fromXf: -0.62,
     rotate: -3,
     delay: 0,
   },
   {
     // Kiri bawah — wf 0.25 → fromXf = -(0.5+0.125) = -0.625
-    src: "https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=900&q=80",
-    finalXf: -0.315,   // inner-edge: -0.315 + 0.125 = -0.19 ✓
-    yf: 0.23,
-    wf: 0.25,
-    aspect: "4/3",
-    fromXf: -0.63,
+    src: "/images/yp2.jpeg",
+    finalXf: -0.34,   // inner-edge: -0.34 + 0.0925 = -0.2475
+    yf: 0.255,
+    wf: 0.185,
+    aspect: "3/4",
+    fromXf: -0.62,
     rotate: 2,
     delay: 0.06,
   },
   {
     // Kanan atas — wf 0.24 → fromXf = +(0.5+0.12) = +0.62
-    src: "https://images.unsplash.com/photo-1519160558534-579f5106e43f?auto=format&fit=crop&w=900&q=80",
-    finalXf: 0.31,     // inner-edge: 0.31 - 0.12 = +0.19 ✓
-    yf: -0.11,
-    wf: 0.24,
+    src: "/images/yp3.jpeg",
+    finalXf: 0.34,     // inner-edge: 0.34 - 0.09 = +0.25
+    yf: -0.2,
+    wf: 0.18,
     aspect: "3/4",
-    fromXf: 0.63,
+    fromXf: 0.61,
     rotate: 3,
     delay: 0.04,
   },
   {
     // Kanan bawah — wf 0.26 → fromXf = +(0.5+0.13) = +0.63
-    src: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=900&q=80",
-    finalXf: 0.325,    // inner-edge: 0.325 - 0.13 = +0.195 ✓
-    yf: 0.25,
-    wf: 0.26,
-    aspect: "4/3",
-    fromXf: 0.64,
+    src: "/images/yp4.jpeg",
+    finalXf: 0.345,    // inner-edge: 0.345 - 0.0925 = +0.2525
+    yf: 0.265,
+    wf: 0.185,
+    aspect: "3/4",
+    fromXf: 0.62,
     rotate: -2,
     delay: 0.09,
   },
@@ -253,13 +253,13 @@ export const giftAccounts = [
 ];
 
 export const navLinks = [
-  { href: "#acara", label: "Google Maps" },
+  { href: "#google-maps", label: "Google Maps" },
   { href: "#cerita", label: "Love" },
   { href: "#gift", label: "Gift for Us" },
 ];
 
 export const mobileMenuLinks = [
-  { href: "#acara", label: "Google Maps" },
+  { href: "#google-maps", label: "Google Maps" },
   { href: "#cerita", label: "Love" },
   { href: "#gift", label: "Gift for Us" },
 ];

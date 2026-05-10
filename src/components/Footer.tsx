@@ -22,12 +22,25 @@ export default function Footer() {
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-120px" }}
           transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 mx-auto max-w-[46rem] px-6 text-center"
+          className="relative z-10 mx-auto max-w-[58rem] px-6 text-center"
         >
-          <p className="font-display text-[clamp(3.1rem,9vw,7.6rem)] leading-[0.88] tracking-[-0.035em] text-ivory drop-shadow-[0_8px_26px_rgba(0,0,0,0.35)]">
-            you&rsquo;re my favorite person to do anything with for the rest of my life.
+          <p className="font-display text-[clamp(1.6rem,4.7vw,4.8rem)] leading-[1.02] tracking-[-0.035em] text-ivory drop-shadow-[0_8px_26px_rgba(0,0,0,0.35)]">
+            And among His signs is that He created for you spouses from among yourselves, that you may
+            find tranquility in them, and He placed between you affection and mercy.
+          </p>
+          <p className="mt-5 text-[10px] font-medium uppercase tracking-[0.32em] text-ivory/70 md:mt-7 md:text-xs">
+            Ar-Rum 30:21
           </p>
         </motion.div>
+
+        <div className="absolute inset-x-0 bottom-8 z-10 px-6 text-center text-ivory md:bottom-10">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-ivory/85 md:text-xs">
+            #foreverTYOurs
+          </p>
+          <p className="mt-3 text-[9px] uppercase tracking-[0.28em] text-ivory/55 md:text-[10px]">
+            Yolla & Pras
+          </p>
+        </div>
       </div>
     </footer>
   );

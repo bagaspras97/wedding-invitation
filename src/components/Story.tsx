@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
 import { useRef } from "react";
 import { story } from "@/lib/content";
 
@@ -61,14 +61,15 @@ function chapterTiming(index: number) {
 
 export default function Story() {
   const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 210,
+    stiffness: 135,
     damping: 34,
-    mass: 0.2,
+    mass: 0.34,
   });
 
   return (
@@ -97,6 +98,7 @@ export default function Story() {
                 item={item}
                 index={index}
                 progress={smoothProgress}
+                reduceMotion={reduceMotion}
               />
             ))}
 
@@ -106,6 +108,7 @@ export default function Story() {
                 item={item}
                 index={index}
                 progress={smoothProgress}
+                reduceMotion={reduceMotion}
               />
             ))}
           </div>
@@ -113,7 +116,7 @@ export default function Story() {
       </div>
 
       <div className="h-[610vh] md:hidden">
-        <MobileStory progress={smoothProgress} />
+        <MobileStory progress={smoothProgress} reduceMotion={reduceMotion} />
       </div>
     </section>
   );
@@ -123,10 +126,12 @@ function ChapterCopy({
   item,
   index,
   progress,
+  reduceMotion,
 }: {
   item: StoryItem;
   index: number;
   progress: MotionValue<number>;
+  reduceMotion: boolean | null;
 }) {
   const { enter, arrive, exitStart, exitEnd } = chapterTiming(index);
   const isLast = index === story.length - 1;
@@ -151,7 +156,7 @@ function ChapterCopy({
 
   return (
     <motion.article
-      style={{ opacity, x }}
+      style={{ opacity, x: reduceMotion ? 0 : x }}
       className={`absolute top-[43vh] max-w-[330px] ${
         index % 2 === 0
           ? "left-[calc(50%-535px)] text-right"
@@ -172,15 +177,15 @@ function StoryPhoto({
   item,
   index,
   progress,
+  reduceMotion,
 }: {
   item: StoryMoment;
   index: number;
   progress: MotionValue<number>;
+  reduceMotion: boolean | null;
 }) {
   const total = storyMoments.length;
-  const previousAnchor = momentAnchor(index - 1, total);
   const { enter, arrive, active, hold, exit } = momentTiming(index, total);
-  const isLast = index === total - 1;
   const stackedY = index * 13;
   const waitingY = index === 0 ? stackedY : 380 + (index - 1) * 34;
   const y = useTransform(
@@ -190,7 +195,7 @@ function StoryPhoto({
       : [enter, arrive, active, hold, exit],
     index === 0
       ? [stackedY, stackedY, stackedY + 8]
-        : [waitingY, 110, stackedY, stackedY, stackedY + 8]
+        : [waitingY, 170, stackedY, stackedY, stackedY + 8]
   );
   const rotate = useTransform(
     progress,
@@ -204,51 +209,57 @@ function StoryPhoto({
   const scale = useTransform(
     progress,
     index === 0
-      ? [0, active, exit]
-      : [enter, arrive, active, exit],
+      ? [0, hold, exit]
+      : [enter, arrive, active, hold, exit],
     index === 0
-      ? [1, 1, 0.985]
-      : [0.965, 0.99, 1, 0.985]
+      ? [1.035, 1.025, 0.99]
+      : [0.94, 0.985, 1.035, 1.02, 0.99]
   );
-  const opacityInput =
-    index === 0
-      ? [0, 1]
-      : index === 1
-        ? [0, enter, arrive, 1]
-        : [0, previousAnchor, enter, arrive, 1];
-  const opacityOutput =
-    index === 0
-      ? [1, 1]
-      : index === 1
-        ? [0.46, 0.46, 1, 1]
-        : [0, 0, 0.46, 1, 1];
-  const opacity = useTransform(progress, opacityInput, opacityOutput);
+  const opacity = 1;
 
   return (
     <div
-      className="absolute left-1/2 top-[57vh] w-[min(23vw,390px)] -translate-x-1/2 -translate-y-1/2"
+      className="group absolute left-1/2 top-[57vh] w-[min(23vw,390px)] -translate-x-1/2 -translate-y-1/2"
       style={{ zIndex: 20 + index }}
     >
       <motion.figure
-        style={{ y, rotate, scale, opacity }}
-        className="rounded-[10px] border border-ink/10 bg-[#f8f4eb] p-3 pb-5 shadow-[0_24px_62px_-34px_rgba(43,38,32,0.48)]"
+        style={{
+          y: reduceMotion ? 0 : y,
+          rotate: reduceMotion ? 0 : rotate,
+          scale: reduceMotion ? 1 : scale,
+          opacity,
+        }}
+        className="rounded-[10px] border border-ink/10 bg-[#f8f4eb] p-3 pb-5 shadow-[0_30px_74px_-38px_rgba(43,38,32,0.5)] will-change-transform"
       >
-        <img
-          src={item.image}
-          alt={item.caption || item.chapterLabel}
-          className="aspect-[16/10] w-full rounded-[4px] object-cover"
-        />
-        {item.caption && (
-          <figcaption className="mt-4 text-center text-sm leading-tight text-stone xl:text-base">
-            {item.caption}
-          </figcaption>
-        )}
+        <motion.div
+          whileHover={reduceMotion ? undefined : { scale: 1.045 }}
+          whileTap={reduceMotion ? undefined : { scale: 1.025 }}
+          transition={{ type: "spring", stiffness: 320, damping: 28 }}
+          className="origin-center will-change-transform"
+        >
+          <img
+            src={item.image}
+            alt={item.caption || item.chapterLabel}
+            className="aspect-[16/10] w-full rounded-[4px] object-cover"
+          />
+          {item.caption && (
+            <figcaption className="mt-4 text-center text-sm leading-tight text-stone xl:text-base">
+              {item.caption}
+            </figcaption>
+          )}
+        </motion.div>
       </motion.figure>
     </div>
   );
 }
 
-function MobileStory({ progress }: { progress: MotionValue<number> }) {
+function MobileStory({
+  progress,
+  reduceMotion,
+}: {
+  progress: MotionValue<number>;
+  reduceMotion: boolean | null;
+}) {
   return (
     <div className="sticky top-0 h-screen overflow-hidden md:hidden">
       <div className="relative h-full px-6 pt-[9vh]">
@@ -256,24 +267,26 @@ function MobileStory({ progress }: { progress: MotionValue<number> }) {
           our story
         </h2>
 
-        <div className="relative mx-auto mt-7 h-[35vh] max-w-[680px]">
+        <div className="relative mx-auto mt-7 h-[34vh] max-w-[680px]">
           {story.map((item, index) => (
             <MobileChapterCopy
               key={item.chapter}
               item={item}
               index={index}
               progress={progress}
+              reduceMotion={reduceMotion}
             />
           ))}
         </div>
 
-        <div className="absolute inset-x-0 top-[52vh] h-[39vh]">
+        <div className="absolute inset-x-0 top-[clamp(24.25rem,45.5vh,28rem)] h-[40vh]">
           {storyMoments.map((item, index) => (
             <MobileStoryPhoto
               key={`${item.chapter}-${item.momentIndex}`}
               item={item}
               index={index}
               progress={progress}
+              reduceMotion={reduceMotion}
             />
           ))}
         </div>
@@ -286,10 +299,12 @@ function MobileChapterCopy({
   item,
   index,
   progress,
+  reduceMotion,
 }: {
   item: StoryItem;
   index: number;
   progress: MotionValue<number>;
+  reduceMotion: boolean | null;
 }) {
   const total = storyMoments.length;
   const span = total <= 1 ? 1 : 1 / (total - 1);
@@ -324,16 +339,18 @@ function MobileStoryPhoto({
   item,
   index,
   progress,
+  reduceMotion,
 }: {
   item: StoryMoment;
   index: number;
   progress: MotionValue<number>;
+  reduceMotion: boolean | null;
 }) {
   const total = storyMoments.length;
   const previousAnchor = momentAnchor(index - 1, total);
   const { enter, arrive, active, hold, exit } = momentTiming(index, total);
-  const stackedY = index * 10;
-  const waitingY = index === 0 ? stackedY : 220;
+  const stackedY = index * 12;
+  const waitingY = index === 0 ? stackedY : 405;
   const lastMomentStart = momentAnchor(total - 1, total);
   const outroStart = Math.min(1, lastMomentStart + (total <= 1 ? 0.12 : (1 / (total - 1)) * 0.36));
 
@@ -358,11 +375,11 @@ function MobileStoryPhoto({
   const scale = useTransform(
     progress,
     index === 0
-      ? [0, active, exit]
-      : [enter, arrive, active, exit],
+      ? [0, hold, exit]
+      : [enter, arrive, active, hold, exit],
     index === 0
-      ? [1, 1, 0.985]
-      : [0.965, 0.99, 1, 0.985]
+      ? [1.025, 1.02, 0.99]
+      : [0.94, 0.98, 1.025, 1.015, 0.99]
   );
   const opacityInput =
     index === 0
@@ -380,12 +397,17 @@ function MobileStoryPhoto({
 
   return (
     <div
-      className="absolute left-1/2 top-0 w-[62vw] max-w-[440px] -translate-x-1/2"
+      className="group absolute left-1/2 top-0 w-[78vw] max-w-[520px] -translate-x-1/2"
       style={{ zIndex: 20 + index }}
     >
       <motion.figure
-        style={{ y, rotate, scale, opacity }}
-        className="rounded-[10px] border border-ink/10 bg-[#f8f4eb] p-3 pb-5 shadow-[0_22px_56px_-32px_rgba(43,38,32,0.5)]"
+        style={{
+          y: reduceMotion ? 0 : y,
+          rotate: reduceMotion ? 0 : rotate,
+          scale: reduceMotion ? 1 : scale,
+          opacity,
+        }}
+        className="rounded-[10px] border border-ink/10 bg-[#f8f4eb] p-3 pb-5 shadow-[0_28px_66px_-36px_rgba(43,38,32,0.46)] will-change-transform"
       >
         <img
           src={item.image}
