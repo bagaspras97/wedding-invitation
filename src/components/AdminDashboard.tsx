@@ -45,15 +45,20 @@ const attendanceLabel: Record<Attendance, string> = {
 
 const defaultInviteText = `Assalamualaikum Wr. Wb.
 
-With joy and gratitude, we invite you to celebrate the wedding of Yolla & Pras.
+Dengan penuh rasa syukur dan kebahagiaan, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri dan memberikan doa restu pada acara pernikahan kami:
 
-Saturday, June 6 2026
-Villa Edwin, Sirnagalih, Bogor
+Yolla & Pras
 
-Open the invitation here:
+Yang akan dilaksanakan pada:
+Hari, Tanggal : Sabtu, 6 Juni 2026
+Tempat        : Villa Edwin, Sirnagalih, Bogor
+
+Untuk informasi lebih lanjut, silakan membuka undangan melalui tautan berikut:
 {{link}}
 
-Your presence and prayers would mean so much to us.`;
+Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir serta memberikan doa restu.
+
+Wassalamualaikum Wr. Wb.`;
 
 const buildInvitationUrl = (guestName: string) => {
   if (typeof window === "undefined") return "";
