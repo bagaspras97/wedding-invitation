@@ -1,22 +1,31 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { events, venueImage, weddingDate } from "@/lib/content";
+import { useHydratedReducedMotion } from "@/hooks/useHydratedReducedMotion";
 import Countdown from "./Countdown";
 
 const fmtWeekday = (d: Date) =>
   d.toLocaleDateString("en-US", {
     weekday: "long",
+    timeZone: "Asia/Jakarta",
   });
 
 const fmtDateLine = (d: Date) =>
-  `${d.toLocaleDateString("en-US", { month: "long" })} ${d.getDate()} ${d.getFullYear()}`;
+  new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "Asia/Jakarta",
+  })
+    .format(d)
+    .replace(",", "");
 
 export default function SaveTheDate() {
   const venue = events[0];
   const ref = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydratedReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],

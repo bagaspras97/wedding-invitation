@@ -1,7 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useHydratedReducedMotion } from "@/hooks/useHydratedReducedMotion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -18,7 +19,7 @@ export default function InvitationCover() {
   const [visible, setVisible] = useState(true);
   const [isOpening, setIsOpening] = useState(false);
   const [guestName, setGuestName] = useState("Our Beloved Guest");
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydratedReducedMotion();
   const openToTopRef = useRef(false);
 
   useEffect(() => {

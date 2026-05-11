@@ -1,8 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
+import { useHydratedReducedMotion } from "@/hooks/useHydratedReducedMotion";
 import { wishes } from "@/lib/content";
 import Field from "./Field";
 import SectionHeading from "./SectionHeading";
@@ -31,7 +32,7 @@ const formatWishDate = (value?: string) => {
 };
 
 export default function Wishes() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydratedReducedMotion();
   const [items, setItems] = useState<WishItem[]>(fallbackWishes);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");

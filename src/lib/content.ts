@@ -8,8 +8,8 @@ export const couple = {
   hashtag: "#PrasetyoYolla2026",
 };
 
-// Tanggal acara — 6 Juni 2026
-export const weddingDate = new Date(2026, 5, 6, 10, 0, 0, 0);
+// Tanggal acara, fixed to WIB so server and browser render the same value.
+export const weddingDate = new Date("2026-06-06T10:00:00+07:00");
 
 export const events = [
   {

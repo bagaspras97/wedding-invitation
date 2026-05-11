@@ -1,23 +1,24 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useHydratedReducedMotion } from "@/hooks/useHydratedReducedMotion";
 
 const introText = "you're cordially invited to celebrate the story of...";
 const coupleDetails = [
   {
     name: "Yolla Lisandra, S.Pd., Gr.",
-    family: "First daughter of Suprapto and Herliana Kusuma Atmaja",
+    family: "First daughter of Mr. Suprapto and Mrs. Herliana Kusuma Atmaja",
   },
   {
     name: "Prasetyo Laksono, S.Kom.",
-    family: "First son of (Alm) Prayogo and Siti Suparnidjah",
+    family: "First son of (Alm) Mr. Prayogo and Mrs. Siti Suparnidjah",
   },
 ];
 
 export default function InvitationIntro() {
   const ref = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydratedReducedMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start 76%", "end 38%"],
@@ -92,7 +93,7 @@ export default function InvitationIntro() {
               <h3 className="font-display text-[clamp(2.05rem,8vw,3.35rem)] font-light italic leading-[0.95] text-ink md:text-[clamp(2.25rem,3.7vw,4rem)]">
                 {person.name}
               </h3>
-              <p className="mx-auto mt-4 max-w-[21rem] text-sm uppercase leading-[1.75] tracking-[0.18em] text-stone md:text-[0.76rem]">
+              <p className="mx-auto mt-4 max-w-[22rem] text-[0.72rem] uppercase leading-[1.7] tracking-[0.15em] text-stone md:text-[0.78rem]">
                 {person.family}
               </p>
             </article>

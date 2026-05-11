@@ -5,7 +5,12 @@ import { useEffect, useRef, useState } from "react";
 import { couple, heroCollage, heroImage, weddingDate } from "@/lib/content";
 
 const fmt = (d: Date) =>
-  d.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+  d.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Asia/Jakarta",
+  });
 
 function useVP() {
   const [vp, setVp] = useState({ w: 0, h: 0 });

@@ -1,8 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Pause, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useHydratedReducedMotion } from "@/hooks/useHydratedReducedMotion";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const audioSrc = "/audio/wedding-song.mp3";
@@ -11,7 +12,7 @@ export default function MusicDock() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlaybackIssue, setHasPlaybackIssue] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydratedReducedMotion();
 
   const playMusic = async () => {
     const audio = audioRef.current;

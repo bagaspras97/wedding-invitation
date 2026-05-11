@@ -1,13 +1,14 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
+import { useHydratedReducedMotion } from "@/hooks/useHydratedReducedMotion";
 import { giftAccounts, giftIntro } from "@/lib/content";
 import SectionHeading from "./SectionHeading";
 
 export default function LoveGift() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydratedReducedMotion();
   const [copied, setCopied] = useState<string | null>(null);
 
   const copyAccount = async (value: string) => {

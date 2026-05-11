@@ -4,7 +4,12 @@ import { MapPin, Clock, Calendar } from "lucide-react";
 import { events } from "@/lib/content";
 
 const fmtDate = (d: Date) =>
-  d.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+  d.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "Asia/Jakarta",
+  });
 
 export default function EventDetails() {
   return (

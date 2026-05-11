@@ -1,8 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useState, type FormEvent } from "react";
+import { useHydratedReducedMotion } from "@/hooks/useHydratedReducedMotion";
 import Field from "./Field";
 import SectionHeading from "./SectionHeading";
 
@@ -15,7 +16,7 @@ type FormState = {
 const empty: FormState = { name: "", guests: "1", attendance: "" };
 
 export default function Rsvp() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useHydratedReducedMotion();
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [submitError, setSubmitError] = useState("");
