@@ -51,8 +51,10 @@ Dengan penuh rasa syukur dan kebahagiaan, kami mengundang *Bapak/Ibu/Saudara/i {
 *Yolla & Pras*
 
 Yang akan dilaksanakan pada:
-*Hari, Tanggal* : Sabtu, 6 Juni 2026
-*Tempat*        : Villa Edwin, Sirnagalih, Bogor
+\`\`\`
+Hari, Tanggal : Sabtu, 6 Juni 2026
+Tempat        : Villa Edwin, Sirnagalih, Bogor
+\`\`\`
 
 Untuk informasi lebih lanjut, silakan membuka undangan melalui tautan berikut:
 {{link}}
