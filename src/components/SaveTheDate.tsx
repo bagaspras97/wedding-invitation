@@ -22,6 +22,20 @@ const fmtDateLine = (d: Date) =>
     .format(d)
     .replace(",", "");
 
+const shortDate = (d: Date) =>
+  new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "Asia/Jakarta",
+  }).format(d);
+
+const springIn = {
+  hidden: { opacity: 0, y: 22, filter: "blur(5px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+};
+
 export default function SaveTheDate() {
   const venue = events[0];
   const ref = useRef<HTMLElement>(null);
@@ -49,52 +63,101 @@ export default function SaveTheDate() {
   return (
     <section ref={ref} className="relative h-[235vh] bg-ivory">
       <span id="google-maps" aria-hidden="true" className="absolute top-[130vh]" />
-      <div className="sticky top-0 h-screen overflow-hidden bg-ivory">
+      <div className="sticky top-0 min-h-[100dvh] overflow-hidden bg-ivory">
         <motion.div
           style={{ opacity: dateOpacity, y: dateY, scale: dateScale }}
-          className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pb-12 pt-16 text-center md:pb-6 md:pt-24"
+          className="absolute inset-0 z-10 flex items-center px-5 py-8 md:px-10 md:py-14"
         >
-          <div className="-translate-y-7 md:translate-y-0">
-            <motion.p
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="eyebrow"
-            >
-              Save The Date
-            </motion.p>
+          <div className="mx-auto w-full max-w-[1180px]">
+            <div>
+              <motion.p
+                variants={springIn}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+                className="eyebrow text-center"
+              >
+                Save The Date
+              </motion.p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.9, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-4 font-display text-[clamp(1.65rem,4vw,3.3rem)] font-light leading-none tracking-[-0.035em] text-ink md:mt-5"
-            >
-              so please join us...
-            </motion.p>
+              <motion.h2
+                variants={springIn}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.95, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-4 whitespace-nowrap text-center font-display text-[clamp(2.35rem,8vw,6.35rem)] font-light leading-none tracking-[-0.06em] text-ink md:mt-5"
+              >
+                {fmtWeekday(weddingDate)}, {fmtDateLine(weddingDate)}
+              </motion.h2>
 
-            <motion.h2
-              initial={{ opacity: 0, y: 26 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.95, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-              className="h-display mt-8 flex flex-col text-[clamp(3.05rem,10vw,8.6rem)] leading-[0.92] tracking-[-0.055em] text-ink md:mt-12"
-            >
-              <span>{fmtWeekday(weddingDate)},</span>
-              <span>{fmtDateLine(weddingDate)}</span>
-            </motion.h2>
+              <motion.div
+                variants={springIn}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.95, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={reduceMotion ? undefined : { y: -3 }}
+                className="relative mt-7 overflow-hidden rounded-[1.1rem] border border-ink/10 bg-[#f8f2e8]/80 px-4 py-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.65),0_24px_60px_-42px_rgba(43,38,32,0.42)] md:mt-8 md:rounded-[1.35rem] md:px-7 md:py-6"
+              >
+                <motion.span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/45 to-transparent"
+                  initial={{ x: "-130%" }}
+                  animate={reduceMotion ? { x: "-130%" } : { x: ["-130%", "330%"] }}
+                  transition={{ duration: 5.8, repeat: Infinity, repeatDelay: 2.4, ease: [0.22, 1, 0.36, 1] }}
+                />
+                <div className="mb-4 flex items-center justify-between gap-4 border-b border-dashed border-ink/18 pb-3 md:mb-5 md:pb-4">
+                  <p className="flex items-center gap-2.5 text-[10px] font-medium uppercase tracking-[0.28em] text-stone md:text-[11px]">
+                    <motion.span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 rounded-full bg-accent"
+                      animate={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: [0.55, 1, 0.55], scale: [1, 1.55, 1] }}
+                      transition={{ duration: 2.4, repeat: Infinity, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                    <span>Countdown</span>
+                  </p>
+                  <p className="hidden text-[10px] uppercase tracking-[0.24em] text-stone/80 sm:block">
+                    To the wedding day
+                  </p>
+                </div>
+                <Countdown target={weddingDate} />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 26 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.95, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-8 w-full md:mt-11"
-            >
-              <Countdown target={weddingDate} />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.95, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-7 grid gap-4 md:mt-8 md:grid-cols-2 md:gap-8"
+              >
+                {events.map((event, index) => (
+                  <motion.article
+                    key={event.title}
+                    layout
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    className="border-t border-dashed border-ink/35 pt-4 md:pt-5"
+                    transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.34 + index * 0.1 }}
+                  >
+                    <div className="flex items-baseline justify-between gap-4">
+                      <h3 className="font-display text-[clamp(1.55rem,3.2vw,2.45rem)] font-light italic leading-none tracking-[-0.035em] text-ink">
+                        {event.title}
+                      </h3>
+                      <span className="font-display text-2xl font-light leading-none text-accent/80 md:text-3xl">
+                        0{index + 1}
+                      </span>
+                    </div>
+                    <div className="mt-3 grid gap-1.5 text-sm leading-relaxed text-ink/76 md:text-base">
+                      {/* <p>{shortDate(event.date)}</p> */}
+                      <p>{event.time}</p>
+                    </div>
+                  </motion.article>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </motion.div>
 

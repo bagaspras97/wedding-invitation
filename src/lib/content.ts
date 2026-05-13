@@ -13,18 +13,18 @@ export const weddingDate = new Date("2026-06-06T10:00:00+07:00");
 
 export const events = [
   {
-    title: "Akad Nikah",
+    title: "Wedding Ceremony",
     date: weddingDate,
-    time: "10:00 WIB",
+    time: "08.00 - 09.00 WIB",
     venue: "Villa Edwin, Sirnagalih Bogor",
     address:
       "Jl. Kabandungan II, Sirnagalih, Kec. Tamansari, Kabupaten Bogor, Jawa Barat 16610",
     mapUrl: "https://maps.app.goo.gl/srJPKoTqEbASQnCn7",
   },
   {
-    title: "Resepsi",
+    title: "Reception",
     date: weddingDate,
-    time: "18:00 WIB",
+    time: "10.30 - 14.00 WIB",
     venue: "Villa Edwin, Sirnagalih Bogor",
     address:
       "Jl. Kabandungan II, Sirnagalih, Kec. Tamansari, Kabupaten Bogor, Jawa Barat 16610",
