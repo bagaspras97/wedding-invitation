@@ -70,7 +70,11 @@ const buildInvitationUrl = (guestName: string) => {
   const trimmedName = guestName.trim();
 
   if (trimmedName) {
-    return `${INVITATION_ORIGIN}/${encodeURIComponent(trimmedName)}`;
+    const guestSlug = trimmedName
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+
+    return `${INVITATION_ORIGIN}/${encodeURIComponent(guestSlug)}`;
   }
 
   return INVITATION_ORIGIN;

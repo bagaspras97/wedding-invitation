@@ -12,8 +12,9 @@ function readGuestName() {
   const params = new URLSearchParams(window.location.search);
   const value = params.get("to") || params.get("guest");
   const pathGuest = window.location.pathname.split("/").filter(Boolean)[0];
+  const decodedPathGuest = pathGuest ? decodeURIComponent(pathGuest).replace(/-/g, " ").trim() : "";
 
-  return value?.trim() || (pathGuest ? decodeURIComponent(pathGuest).trim() : "") || "Our Beloved Guest";
+  return value?.trim() || decodedPathGuest || "Our Beloved Guest";
 }
 
 export default function InvitationCover() {
