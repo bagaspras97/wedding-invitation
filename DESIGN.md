@@ -1,8 +1,8 @@
-# Design System: Yolla & Pras Wedding Invitation
+# Design System: Yolla & Tyo Wedding Invitation
 
 ## 1. Visual Theme & Atmosphere
 
-This invitation should feel like a premium editorial wedding microsite: warm, cinematic, intimate, and quietly luxurious. The design is inspired by Cordially, but adapted for Yolla & Pras with a softer Indonesian wedding mood.
+This invitation should feel like a premium editorial wedding microsite: warm, cinematic, intimate, and quietly luxurious. The design is inspired by Cordially, but adapted for Yolla & Tyo with a softer Indonesian wedding mood.
 
 - **Density:** Gallery-airy. Sections need generous breathing room, but never empty scroll with no visual change.
 - **Variance:** Editorial asymmetric. Desktop may use offset grids, pinned layouts, and image-led compositions. Mobile should be centered and direct.
@@ -143,7 +143,7 @@ A reader scrolling without reading the words should still feel a calm, repeating
 
 Desktop:
 
-- Logo: `Y & P`.
+- Logo: `YT`.
 - Links: `Google Maps`, `Love`, `Gift for Us`.
 - CTA: `Submit RSVP`.
 - Do not include a separate RSVP nav link because the CTA already covers it.
@@ -161,7 +161,7 @@ Mobile:
 The hero is image-led and cinematic.
 
 - The central photo is the primary focus.
-- Couple name should read clearly over the image: `Yolla & Pras`.
+- Couple name should read clearly over the image: `Yolla & Tyo`.
 - Date metadata should stay secondary.
 - Desktop collage photos enter from the edges and land before the next white section appears.
 - Edge photos must end in their final positions before the following section begins.

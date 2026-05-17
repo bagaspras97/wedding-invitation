@@ -19,7 +19,7 @@ const concepts = [
               Dear Bagas Family
             </p>
             <h2 className="font-display text-[4.7rem] font-light italic leading-[0.86]">
-              Yolla &<br />Pras
+              Yolla &<br />Tyo
             </h2>
             <p className="mt-6 text-[0.7rem] uppercase tracking-[0.32em] text-ivory/70">
               6 Juni 2026
@@ -53,7 +53,7 @@ const concepts = [
           <h2 className="mt-8 flex flex-col items-center font-display font-light italic leading-[0.82]">
             <span className="text-[5.1rem]">Yolla</span>
             <span className="-my-1 text-[2.4rem] leading-none text-stone">&</span>
-            <span className="text-[5.1rem]">Pras</span>
+            <span className="text-[5.1rem]">Tyo</span>
           </h2>
           <p className="mt-8 text-[0.72rem] uppercase tracking-[0.3em] text-stone">
             6 Juni 2026
@@ -78,7 +78,7 @@ const concepts = [
           <h2 className="mt-6 flex flex-col items-center font-display font-light italic leading-[0.84]">
             <span className="text-[4.45rem]">Yolla</span>
             <span className="-my-1 text-[2.1rem] leading-none text-stone">&</span>
-            <span className="text-[4.45rem]">Pras</span>
+            <span className="text-[4.45rem]">Tyo</span>
           </h2>
           <p className="mt-6 text-[0.7rem] uppercase tracking-[0.3em] text-stone">
             6 Juni 2026

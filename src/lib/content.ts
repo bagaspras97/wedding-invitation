@@ -1,10 +1,10 @@
 // Konten terpusat — edit di sini untuk customize konten website undangan.
 
 export const couple = {
-  groom: { name: "Pras", full: "Prasetyo" },
+  groom: { name: "Tyo", full: "Prasetyo" },
   bride: { name: "Yolla", full: "Yolla" },
-  initials: "Y & P",
-  heroNames: "Yolla & Pras",
+  initials: "YT",
+  heroNames: "Yolla & Tyo",
   hashtag: "#PrasetyoYolla2026",
 };
 
@@ -220,7 +220,7 @@ export const wishes = [
     name: "Dimas",
     relation: "Teman Kerja",
     message:
-      "Bahagia selalu untuk Yolla dan Pras. Semoga perjalanan baru ini membawa banyak cerita indah.",
+      "Bahagia selalu untuk Yolla dan Tyo. Semoga perjalanan baru ini membawa banyak cerita indah.",
   },
   {
     name: "Maya",

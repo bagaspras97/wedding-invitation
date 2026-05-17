@@ -17,7 +17,7 @@ type AdminData = {
 
 type InviteMode = "template" | "free";
 
-const STORAGE_KEY = "yolla-pras-admin-password";
+const STORAGE_KEY = "yolla-tyo-admin-password";
 const INVITATION_ORIGIN = "https://yollapras.vercel.app";
 
 const emptyData: AdminData = {
@@ -51,7 +51,7 @@ Kepada Yth.
 
 Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk berkenan hadir dalam acara pernikahan kami:
 
-*Yolla & Pras*
+*Yolla & Tyo*
 
 Yang akan dilaksanakan pada:
 *Hari, Tanggal*: Sabtu, 6 Juni 2026
@@ -254,7 +254,7 @@ export default function AdminDashboard() {
             </h1>
             <p className="mt-8 max-w-xl text-lg leading-8 text-stone md:text-xl">
               Enter the password to review RSVP confirmations and guest wishes for Yolla
-              and Pras.
+              and Tyo.
             </p>
 
             <label className="mt-12 block">
@@ -289,7 +289,7 @@ export default function AdminDashboard() {
       <section className="mx-auto max-w-7xl">
         <header className="flex flex-col gap-8 rounded-[2.5rem] border border-ink/10 bg-white/45 p-7 md:flex-row md:items-end md:justify-between md:p-10">
           <div>
-            <p className="eyebrow">Yolla & Pras</p>
+            <p className="eyebrow">Yolla & Tyo</p>
             <h1 className="mt-5 font-display text-6xl font-light leading-none md:text-8xl">
               admin
             </h1>

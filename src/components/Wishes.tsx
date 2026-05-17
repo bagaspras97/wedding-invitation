@@ -131,7 +131,7 @@ export default function Wishes() {
         <SectionHeading
           eyebrow="Guest Notes"
           title="wishes and prayers"
-          description="Leave a warm note for Yolla and Pras as they begin this new chapter."
+          description="Leave a warm note for Yolla and Tyo as they begin this new chapter."
           className="mx-auto max-w-4xl"
         />
 
@@ -201,7 +201,7 @@ export default function Wishes() {
             {!isLoading && items.length === 0 && (
               <div className="border-b border-ink/12 py-10">
                 <p className="text-lg leading-relaxed text-stone">
-                  Be the first to leave a wish for Yolla and Pras.
+                  Be the first to leave a wish for Yolla and Tyo.
                 </p>
               </div>
             )}

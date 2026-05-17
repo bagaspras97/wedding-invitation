@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
         <Image
           src="/images/chapter3-story2.jpg"
-          alt="Yolla and Pras closing portrait"
+          alt="Yolla and Tyo closing portrait"
           fill
           sizes="100vw"
           className="object-cover"
@@ -38,7 +38,7 @@ export default function Footer() {
             #foreverTYOurs
           </p>
           <p className="mt-3 text-[9px] uppercase tracking-[0.28em] text-ivory/55 md:text-[10px]">
-            Yolla & Pras
+            Yolla & Tyo
           </p>
         </div>
       </div>

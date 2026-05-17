@@ -116,7 +116,7 @@ export default function InvitationCover() {
                   &
                 </span>
                 <span className="text-[clamp(3.25rem,14vw,4.75rem)] md:text-[clamp(5.8rem,8.6vw,9.2rem)]">
-                  Pras
+                  Tyo
                 </span>
               </h1>
               <p className="mt-4 text-[0.66rem] uppercase tracking-[0.26em] text-stone md:mt-8 md:text-[0.78rem]">

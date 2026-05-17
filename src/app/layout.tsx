@@ -15,7 +15,7 @@ const body = Inter({
   variable: "--font-body",
 });
 
-const title = "Yolla & Pras - Undangan Pernikahan";
+const title = "Yolla & Tyo - Undangan Pernikahan";
 const description =
   "Dengan penuh sukacita, kami mengundang Anda untuk hadir dalam hari bahagia kami.";
 const coverImage = "/images/chapter3-story2.jpg";
@@ -28,13 +28,13 @@ export const metadata: Metadata = {
     title,
     description,
     url: "https://yollapras.vercel.app",
-    siteName: "Yolla & Pras",
+    siteName: "Yolla & Tyo",
     images: [
       {
         url: coverImage,
         width: 1200,
         height: 630,
-        alt: "Yolla dan Pras",
+        alt: "Yolla dan Tyo",
       },
     ],
     locale: "id_ID",
