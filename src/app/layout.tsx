@@ -21,13 +21,13 @@ const description =
 const coverImage = "/images/chapter3-story2.jpg";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yollapras.vercel.app"),
+  metadataBase: new URL("https://yollatyo.vercel.app"),
   title,
   description,
   openGraph: {
     title,
     description,
-    url: "https://yollapras.vercel.app",
+    url: "https://yollatyo.vercel.app",
     siteName: "Yolla & Tyo",
     images: [
       {

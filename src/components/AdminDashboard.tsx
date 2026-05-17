@@ -18,7 +18,7 @@ type AdminData = {
 type InviteMode = "template" | "free";
 
 const STORAGE_KEY = "yolla-tyo-admin-password";
-const INVITATION_ORIGIN = "https://yollapras.vercel.app";
+const INVITATION_ORIGIN = "https://yollatyo.vercel.app";
 
 const emptyData: AdminData = {
   rsvps: [],

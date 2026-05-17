@@ -4,7 +4,7 @@ import { supabaseAdminRest } from "@/lib/submissions/supabase-rest";
 
 export const dynamic = "force-dynamic";
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "yollapras";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "yollatyo";
 
 const isAuthorized = (request: Request) => {
   return request.headers.get("x-admin-password") === ADMIN_PASSWORD;
