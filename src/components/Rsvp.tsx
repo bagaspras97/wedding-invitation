@@ -1,8 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { Check } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { useHydratedReducedMotion } from "@/hooks/useHydratedReducedMotion";
 import Field from "./Field";
 import SectionHeading from "./SectionHeading";
@@ -19,54 +18,11 @@ export default function Rsvp() {
   const reduceMotion = useHydratedReducedMotion();
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
-  const [submitError, setSubmitError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const submitNotice = "RSVP sudah ditutup. Terima kasih untuk semua konfirmasi yang sudah masuk.";
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setForm((current) => ({ ...current, [key]: value }));
     setErrors((current) => ({ ...current, [key]: undefined }));
-    setSubmitError("");
-  };
-
-  const onSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    if (isSubmitting) return;
-
-    const nextErrors: typeof errors = {};
-    if (!form.name.trim()) nextErrors.name = "Please enter your name";
-    if (!form.attendance) nextErrors.attendance = "Please choose your attendance";
-
-    setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
-
-    setIsSubmitting(true);
-    setSubmitError("");
-
-    try {
-      const response = await fetch("/api/rsvp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          attendance: form.attendance,
-          guests: Number(form.guests),
-        }),
-      });
-      const result = (await response.json().catch(() => ({}))) as { error?: string };
-
-      if (!response.ok) {
-        throw new Error(result.error || "Unable to send RSVP right now.");
-      }
-
-      setSubmitted(true);
-      setForm(empty);
-      setTimeout(() => setSubmitted(false), 4500);
-    } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Unable to send RSVP right now.");
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return (
@@ -84,7 +40,7 @@ export default function Rsvp() {
 
         <div className="mx-auto mt-12 max-w-3xl md:mt-16">
           <motion.form
-            onSubmit={onSubmit}
+            onSubmit={(event) => event.preventDefault()}
             initial={reduceMotion ? false : { opacity: 0, y: 34 }}
             whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
@@ -103,6 +59,7 @@ export default function Rsvp() {
                   type="text"
                   value={form.name}
                   onChange={(event) => update("name", event.target.value)}
+                  disabled
                   className="input"
                   placeholder="Your name"
                 />
@@ -112,6 +69,7 @@ export default function Rsvp() {
                 <select
                   value={form.guests}
                   onChange={(event) => update("guests", event.target.value)}
+                  disabled
                   className="input"
                 >
                   {[1, 2, 3, 4].map((guests) => (
@@ -136,12 +94,13 @@ export default function Rsvp() {
                     key={attendance}
                     type="button"
                     onClick={() => update("attendance", attendance)}
+                    disabled
                     whileHover={reduceMotion ? undefined : { y: -2 }}
                     whileTap={reduceMotion ? undefined : { scale: 0.985 }}
                     className={`min-h-12 rounded-full border px-4 py-3 text-[11px] font-medium uppercase tracking-[0.22em] transition duration-300 active:scale-[0.98] ${
                       form.attendance === attendance
                         ? "border-ink bg-ink text-ivory shadow-[0_16px_38px_-28px_rgba(43,38,32,0.75)]"
-                        : "border-ink/14 bg-cream/55 text-stone hover:border-accent hover:text-ink"
+                        : "border-ink/14 bg-cream/55 text-stone"
                     }`}
                   >
                     {attendance === "attending" ? "Attending" : "Unable to Attend"}
@@ -160,40 +119,21 @@ export default function Rsvp() {
             >
               <motion.button
                 type="submit"
-                disabled={isSubmitting}
-                whileHover={reduceMotion || isSubmitting ? undefined : { scale: 1.015 }}
-                whileTap={reduceMotion || isSubmitting ? undefined : { scale: 0.985 }}
+                disabled
                 className="rounded-full bg-ink px-8 py-4 text-[11px] font-medium uppercase tracking-[0.24em] text-ivory shadow-[0_18px_48px_-32px_rgba(43,38,32,0.75)] transition duration-500 hover:scale-[1.01] hover:bg-accent active:scale-[0.99] disabled:cursor-wait disabled:opacity-60 disabled:hover:scale-100"
               >
-                {isSubmitting ? "Sending..." : "Send RSVP"}
+                RSVP Closed
               </motion.button>
             </motion.div>
 
-            {submitError && (
-              <p className="mt-5 text-center text-sm leading-relaxed text-red-800 md:text-right">
-                {submitError}
-              </p>
-            )}
+            <p className="mt-5 text-center text-sm leading-relaxed text-stone md:text-right">
+              {submitNotice}
+            </p>
           </motion.form>
         </div>
       </div>
 
       {/* <div className="pointer-events-none mx-auto mt-16 h-px max-w-5xl bg-gradient-to-r from-transparent via-ink/10 to-transparent md:mt-24" /> */}
-
-      <AnimatePresence>
-        {submitted && (
-          <motion.div
-            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 22, scale: 0.98 }}
-            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 18, scale: 0.98 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-6 left-1/2 z-50 flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center justify-center gap-3 rounded-full bg-ink px-5 py-3 text-center text-sm text-ivory shadow-[0_24px_80px_-40px_rgba(43,38,32,0.9)] md:bottom-8 md:left-auto md:right-8 md:w-auto md:max-w-none md:translate-x-0 md:px-6"
-          >
-            <Check size={16} className="shrink-0 text-accent" />
-            Your RSVP has been received.
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <style jsx>{`
         :global(.input) {

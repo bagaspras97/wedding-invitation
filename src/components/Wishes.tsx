@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { useHydratedReducedMotion } from "@/hooks/useHydratedReducedMotion";
 import { wishes } from "@/lib/content";
 import Field from "./Field";
@@ -36,11 +36,9 @@ export default function Wishes() {
   const [items, setItems] = useState<WishItem[]>(fallbackWishes);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showAll, setShowAll] = useState(false);
+  const closedNotice = "Ucapan sudah ditutup. Terima kasih untuk semua doa dan pesan hangatnya.";
 
   const visibleWishes = items.slice(0, 4);
 
@@ -78,53 +76,6 @@ export default function Wishes() {
     };
   }, []);
 
-  const onSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-    if (isSubmitting) return;
-
-    const trimmedName = name.trim();
-    const trimmedMessage = message.trim();
-
-    if (!trimmedName || !trimmedMessage) {
-      setError("Please write your name and message.");
-      setSuccess("");
-      return;
-    }
-
-    setIsSubmitting(true);
-    setError("");
-    setSuccess("");
-
-    try {
-      const response = await fetch("/api/wishes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: trimmedName, message: trimmedMessage }),
-      });
-      const result = (await response.json().catch(() => ({}))) as {
-        wish?: WishItem;
-        error?: string;
-      };
-
-      if (!response.ok || !result.wish) {
-        throw new Error(result.error || "Unable to send your wish right now.");
-      }
-
-      setItems((current) => [result.wish as WishItem, ...current.filter((wish) => !wish.id.startsWith("sample-"))]);
-      setName("");
-      setMessage("");
-      setSuccess("Your wish has been added.");
-    } catch (submitError) {
-      setError(
-        submitError instanceof Error
-          ? submitError.message
-          : "Unable to send your wish right now.",
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <section id="ucapan" className="overflow-hidden bg-ivory px-6 py-28 md:py-40">
       <div className="mx-auto max-w-6xl">
@@ -137,7 +88,7 @@ export default function Wishes() {
 
         <div className="mt-16 grid gap-14 md:mt-24 md:grid-cols-[0.8fr_1.2fr] md:gap-20">
           <motion.form
-            onSubmit={onSubmit}
+            onSubmit={(event) => event.preventDefault()}
             initial={reduceMotion ? false : { opacity: 0, y: 28 }}
             whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
@@ -150,11 +101,8 @@ export default function Wishes() {
                   <input
                     type="text"
                     value={name}
-                    onChange={(event) => {
-                      setName(event.target.value);
-                      setError("");
-                      setSuccess("");
-                    }}
+                    onChange={(event) => setName(event.target.value)}
+                    disabled
                     placeholder="Write your name"
                     className="w-full rounded-none border-0 border-b border-ink/15 bg-transparent px-0 py-3 text-base text-ink outline-none transition-colors placeholder:text-stone/45 focus:border-ink"
                   />
@@ -164,11 +112,8 @@ export default function Wishes() {
                   <textarea
                     rows={5}
                     value={message}
-                    onChange={(event) => {
-                      setMessage(event.target.value);
-                      setError("");
-                      setSuccess("");
-                    }}
+                    onChange={(event) => setMessage(event.target.value)}
+                    disabled
                     placeholder="Write your best wishes for the couple"
                     className="w-full resize-none rounded-none border-0 border-b border-ink/15 bg-transparent px-0 py-3 text-base leading-relaxed text-ink outline-none transition-colors placeholder:text-stone/45 focus:border-ink"
                   />
@@ -177,23 +122,15 @@ export default function Wishes() {
 
               <motion.button
                 type="submit"
-                disabled={isSubmitting}
-                whileHover={reduceMotion || isSubmitting ? undefined : { scale: 1.012, y: -1 }}
-                whileTap={reduceMotion || isSubmitting ? undefined : { scale: 0.985 }}
+                disabled
                 className="mt-8 w-full rounded-full bg-ink px-6 py-4 text-xs font-medium uppercase tracking-[0.24em] text-ivory shadow-[0_18px_48px_-32px_rgba(43,38,32,0.75)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.01] active:scale-[0.99] disabled:cursor-wait disabled:opacity-60 disabled:hover:scale-100"
               >
-                {isSubmitting ? "Sending..." : "Send Wishes"}
+                Wishes Closed
               </motion.button>
 
-              {(error || success) && (
-                <p
-                  className={`mt-4 text-center text-xs leading-relaxed ${
-                    error ? "text-red-800" : "text-stone"
-                  }`}
-                >
-                  {error || success}
-                </p>
-              )}
+              <p className="mt-4 text-center text-xs leading-relaxed text-stone">
+                {closedNotice}
+              </p>
             </div>
           </motion.form>
 
